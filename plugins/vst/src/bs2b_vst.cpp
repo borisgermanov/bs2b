@@ -162,8 +162,7 @@ bool bs2b_effect::getVendorString( char *text )
 
 VstInt32 bs2b_effect::getVendorVersion()
 { 
-	// 1.2.0
-	return 10200;
+	return BS2B_VERSION_INT;
 }
 
 void bs2b_effect::processReplacing( float **inputs, float **outputs,

@@ -206,6 +206,38 @@
 				RelativePath="..\src\bs2b_vst.cpp"
 				>
 			</File>
+		</Filter>
+		<Filter
+			Name="libbs2b"
+			>
+			<File
+				RelativePath="..\..\..\libbs2b\src\bs2b.c"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\libbs2b\src\bs2bclass.cpp"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="VST"
+			>
+			<Filter
+				Name="Interfaces"
+				>
+				<File
+					RelativePath="..\..\vstsdk2.4\pluginterfaces\vst2.x\aeffect.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\vstsdk2.4\pluginterfaces\vst2.x\aeffectx.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\vstsdk2.4\pluginterfaces\vst2.x\vstfxstore.h"
+					>
+				</File>
+			</Filter>
 			<Filter
 				Name="vst2.x"
 				>
@@ -262,34 +294,6 @@
 					>
 				</File>
 			</Filter>
-			<Filter
-				Name="libbs2b"
-				>
-				<File
-					RelativePath="..\..\..\libbs2b\src\bs2b.c"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\libbs2b\src\bs2bclass.cpp"
-					>
-				</File>
-			</Filter>
-		</Filter>
-		<Filter
-			Name="Interfaces"
-			>
-			<File
-				RelativePath="..\..\vstsdk2.4\pluginterfaces\vst2.x\aeffect.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\vstsdk2.4\pluginterfaces\vst2.x\aeffectx.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\vstsdk2.4\pluginterfaces\vst2.x\vstfxstore.h"
-				>
-			</File>
 		</Filter>
 	</Files>
 	<Globals>
