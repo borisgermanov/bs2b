@@ -1,3 +1,6 @@
+2009-02-24 Boris Mikhaylov <http://www.tmn.ru/~bor>
+	* Added to bs2b sources.
+
 2009-02-02 Boris Mikhaylov <http://www.tmn.ru/~bor>
 
 	1.2.0
