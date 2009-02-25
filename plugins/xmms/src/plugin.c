@@ -18,15 +18,16 @@
 
 #ifdef HAVE_CONFIG_H
 # include <config.h>
-# define VERSION_PART " " VERSION
 #else
-# define VERSION_PART
+# define VERSION "?.?.?"
 #endif
 
 
 
 #include <plugin.h>
 #include <bs2b.h>
+#include <string.h>
+#include <stdio.h>
 
 
 
@@ -68,7 +69,7 @@ int mod_samples(gpointer * d, gint length, AFormat afmt, gint srate, gint nch) {
     if (nch != 2) {
         return length;
     }
-    
+
 	bs2b_set_srate(bs2b, srate);
 
     switch (afmt) {
@@ -133,7 +134,7 @@ void query_format(AFormat * fmt, gint * rate, gint * nch) {
 EffectPlugin xmmsBs2b = {
 	NULL, /* handle */
 	NULL, /* filename */
-	"Bauer stereophonic-to-binaural" VERSION_PART " (built " __DATE__ ")", /* description */
+	NULL, /* description */
 	init, /* init */
 	cleanup, /* cleanup */
 	nothing, /* about */
@@ -145,6 +146,21 @@ EffectPlugin xmmsBs2b = {
 
 
 EffectPlugin * get_eplugin_info() {
+	const char * const version_format = "Bauer stereophonic-to-binaural "
+			VERSION " (%s)";
+	const int format_len = strlen(version_format);
+	const int bs2b_version_len = strlen(bs2b_runtime_version());
+    const int final_len = format_len - 2 + bs2b_version_len;
+
+	if (xmmsBs2b.description != NULL) {
+		free(xmmsBs2b.description);
+	}
+	xmmsBs2b.description = malloc(final_len + 1);
+	if (xmmsBs2b.description != NULL) {
+		snprintf(xmmsBs2b.description, final_len + 1, version_format,
+				bs2b_runtime_version());
+		xmmsBs2b.description[final_len] = '\0';
+	}
+
 	return &xmmsBs2b;
 }
-
