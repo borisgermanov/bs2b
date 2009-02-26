@@ -161,8 +161,9 @@ bool bs2b_effect::getVendorString( char *text )
 }
 
 VstInt32 bs2b_effect::getVendorVersion()
-{ 
-	return BS2B_VERSION_INT;
+{
+	// Version 1.2.0
+	return ( 1 << 16 ) | ( 2 << 8 ) | ( 0 );
 }
 
 void bs2b_effect::processReplacing( float **inputs, float **outputs,
