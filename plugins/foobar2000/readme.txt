@@ -1,7 +1,7 @@
 Bauer stereophonic-to-binaural DSP (bs2b)
 Copyright (c) 2005  Boris Mikhaylov <http://www.tmn.ru/~bor>
 
-Foobar2000 plugin source code.
+Foobar2000 plugin.
 
 The Bauer stereophonic-to-binaural DSP (bs2b) is designed
 to improve headphone listening of stereo audio records.

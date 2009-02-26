@@ -33,7 +33,7 @@
 
 #include "resource.h"
 
-static char _bs2b_version[]   = BS2B_VERSION_STR;
+static char _bs2b_version[]   = "2.2.0";
 static char _bs2b_name[]      = "bs2b";
 static char _bs2b_full_name[] = "Bauer stereophonic-to-binaural DSP";
 static char _bs2b_about[]     =

@@ -1,7 +1,10 @@
-2009-02-24 Boris Mikhaylov <http://www.tmn.ru/~bor>
-	* Added to bs2b sources.
+2009-02-26 Boris Mikhaylov <http://www.tmn.ru/~bor>
+
+	2.2.0
+
 	* libbs2b with multi instances are used.
 	* Foobar2000 SDK 2008-11-29 are used.
+	* Config dialog changes are now updated immediately.
 
 2006-11-14 Boris Mikhaylov <http://www.tmn.ru/~bor>
 
