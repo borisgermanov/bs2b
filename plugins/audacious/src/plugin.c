@@ -109,4 +109,4 @@ void init() {
 
 
 static EffectPlugin * plugins[] = { &audaciousBs2b, NULL };
-SIMPLE_EFFECT_PLUGIN(bs2b, plugins);
+SIMPLE_EFFECT_PLUGIN(audaciousBs2b, plugins);
