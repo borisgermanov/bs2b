@@ -60,24 +60,29 @@ static gint mod_samples(gpointer * data, gint length, AFormat fmt, gint srate, g
 	switch (fmt) {
 	CASE_BS2B(FMT_S8,     char,          bs2b_cross_feed_s8,  data, length)
 	CASE_BS2B(FMT_U8,     unsigned char, bs2b_cross_feed_u8,  data, length)
-
-	CASE_BS2B(FMT_U16_LE, short,         bs2b_cross_feed_16,  data, length)
-	CASE_BS2B(FMT_U16_BE, short,         bs2b_cross_feed_16,  data, length)
-	CASE_BS2B(FMT_U16_NE, short,         bs2b_cross_feed_16,  data, length)
+/*
+	CASE_BS2B(FMT_U16_LE, unsigned short, bs2b_cross_feed_16,  data, length)
+	CASE_BS2B(FMT_U16_BE, unsigned short, bs2b_cross_feed_16,  data, length)
+	CASE_BS2B(FMT_U16_NE, unsigned short, bs2b_cross_feed_16,  data, length)
+*/
 	CASE_BS2B(FMT_S16_LE, short,         bs2b_cross_feed_16,  data, length)
 	CASE_BS2B(FMT_S16_BE, short,         bs2b_cross_feed_16,  data, length)
 	CASE_BS2B(FMT_S16_NE, short,         bs2b_cross_feed_16,  data, length)
 
-	CASE_BS2B(FMT_U24_LE, long,          bs2b_cross_feed_24,  data, length)
-	CASE_BS2B(FMT_U24_BE, long,          bs2b_cross_feed_24,  data, length)
-	CASE_BS2B(FMT_U24_NE, long,          bs2b_cross_feed_24,  data, length)
+/*
+	CASE_BS2B(FMT_U24_LE, unsigned long, bs2b_cross_feed_24,  data, length)
+	CASE_BS2B(FMT_U24_BE, unsigned long, bs2b_cross_feed_24,  data, length)
+	CASE_BS2B(FMT_U24_NE, unsigned long, bs2b_cross_feed_24,  data, length)
+*/
 	CASE_BS2B(FMT_S24_LE, long,          bs2b_cross_feed_24,  data, length)
 	CASE_BS2B(FMT_S24_BE, long,          bs2b_cross_feed_24,  data, length)
 	CASE_BS2B(FMT_S24_NE, long,          bs2b_cross_feed_24,  data, length)
 
-	CASE_BS2B(FMT_U32_LE, long,          bs2b_cross_feed_32,  data, length)
-	CASE_BS2B(FMT_U32_BE, long,          bs2b_cross_feed_32,  data, length)
-	CASE_BS2B(FMT_U32_NE, long,          bs2b_cross_feed_32,  data, length)
+/*
+	CASE_BS2B(FMT_U32_LE, unsigned long, bs2b_cross_feed_32,  data, length)
+	CASE_BS2B(FMT_U32_BE, unsigned long, bs2b_cross_feed_32,  data, length)
+	CASE_BS2B(FMT_U32_NE, unsigned long, bs2b_cross_feed_32,  data, length)
+*/
 	CASE_BS2B(FMT_S32_LE, long,          bs2b_cross_feed_32,  data, length)
 	CASE_BS2B(FMT_S32_BE, long,          bs2b_cross_feed_32,  data, length)
 	CASE_BS2B(FMT_S32_NE, long,          bs2b_cross_feed_32,  data, length)

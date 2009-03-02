@@ -9,6 +9,10 @@ AM_INIT_AUTOMAKE([1.10.1 -Wall foreign subdir-objects
 AC_CONFIG_SRCDIR([src/plugin.c])
 AC_CONFIG_HEADERS([config.h])
 
+
+AC_C_BIGENDIAN
+
+
 # Checks for programs.
 AC_PROG_CC
 AC_DISABLE_STATIC  # Must come before AC_PROG_LIBTOOL
