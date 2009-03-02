@@ -1,6 +1,6 @@
 /*
  * bs2b XMMS effect plugin
- * Copyright (C) 2007, Sebastian Pipping <webmaster@hartwork.org>
+ * Copyright (C) 2007, Sebastian Pipping <sebastian@pipping.org>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
