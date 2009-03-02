@@ -40,4 +40,5 @@ PKG_CHECK_MODULES([BS2B], [
 
 AC_CONFIG_FILES([Makefile
                  src/Makefile])
+
 AC_OUTPUT

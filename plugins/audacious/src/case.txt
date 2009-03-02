@@ -1,0 +1,10 @@
+FMT_S8,                 char,           AB_SYSTEM_ENDIAN,  NOOP,     bs2b_cross_feed_s8
+FMT_U8,                 unsigned char,  AB_SYSTEM_ENDIAN,  NOOP,     bs2b_cross_feed_u8
+
+FMT_S16_LE,             short,          AB_LITTLE_ENDIAN,  swap_16,  bs2b_cross_feed_16
+FMT_S16_BE|FMT_S16_NE,  short,          AB_BIG_ENDIAN,     swap_16,  bs2b_cross_feed_16
+
+FMT_S32_LE,             long,           AB_LITTLE_ENDIAN,  swap_32,  bs2b_cross_feed_32
+FMT_S32_BE|FMT_S32_NE,  long,           AB_BIG_ENDIAN,     swap_32,  bs2b_cross_feed_32
+
+FMT_FLOAT,              float,          AB_SYSTEM_ENDIAN,  NOOP,     bs2b_cross_feed_f32

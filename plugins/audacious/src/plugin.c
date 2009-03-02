@@ -27,8 +27,41 @@
 # define VERSION "?.?.?"
 #endif
 
+#define AB_LITTLE_ENDIAN 0
+#define AB_BIG_ENDIAN 1
+
+#ifdef WORDS_BIGENDIAN
+# define SYSTEM_ENDIAN AB_BIG_ENDIAN
+#else
+# define SYSTEM_ENDIAN AB_LITTLE_ENDIAN
+#endif
+
+
+#define AB_SWAP_16(x) (\
+	  ((x & 0x00ff) << 8)\
+	| ((x & 0xff00) >> 8))
+
+#define AB_SWAP_32(x) (\
+	  (((x & 0x000000ff) >>  0) << 24)\
+	| (((x & 0x0000ff00) >>  8) << 16)\
+	| (((x & 0x00ff0000) >> 16) <<  8)\
+	| (((x & 0xff000000) >> 24) <<  0))
+
 
 static t_bs2bdp bs2b = NULL;
+
+
+static void swap_16(void * pair) {
+	unsigned short * p = (unsigned short *)pair;
+	p[0] = AB_SWAP_16(p[0]);
+	p[1] = AB_SWAP_16(p[1]);
+}
+
+static void swap_32(void * pair) {
+	unsigned long * p = (unsigned long *)pair;
+	p[0] = AB_SWAP_32(p[0]);
+	p[1] = AB_SWAP_32(p[1]);
+}
 
 
 static void cleanup() {
@@ -39,55 +72,15 @@ static void cleanup() {
 }
 
 
-#define CASE_BS2B(label, dataType, functionToCall, data, length) \
-	case label: \
-	{ \
-		gint num = length / sizeof(dataType) / 2; \
-		dataType * sample = (dataType *)*data; \
-		while (num--) { \
-			functionToCall(bs2b, sample); \
-			sample += 2; \
-		} \
-	} \
-	break;
-
-
 static gint mod_samples(gpointer * data, gint length, AFormat fmt, gint srate, gint nch) {
 	if ((data == NULL) || (*data == NULL) || (nch != 2)) {
 		return length;
 	}
 
 	switch (fmt) {
-	CASE_BS2B(FMT_S8,     char,          bs2b_cross_feed_s8,  data, length)
-	CASE_BS2B(FMT_U8,     unsigned char, bs2b_cross_feed_u8,  data, length)
-/*
-	CASE_BS2B(FMT_U16_LE, unsigned short, bs2b_cross_feed_16,  data, length)
-	CASE_BS2B(FMT_U16_BE, unsigned short, bs2b_cross_feed_16,  data, length)
-	CASE_BS2B(FMT_U16_NE, unsigned short, bs2b_cross_feed_16,  data, length)
-*/
-	CASE_BS2B(FMT_S16_LE, short,         bs2b_cross_feed_16,  data, length)
-	CASE_BS2B(FMT_S16_BE, short,         bs2b_cross_feed_16,  data, length)
-	CASE_BS2B(FMT_S16_NE, short,         bs2b_cross_feed_16,  data, length)
-
-/*
-	CASE_BS2B(FMT_U24_LE, unsigned long, bs2b_cross_feed_24,  data, length)
-	CASE_BS2B(FMT_U24_BE, unsigned long, bs2b_cross_feed_24,  data, length)
-	CASE_BS2B(FMT_U24_NE, unsigned long, bs2b_cross_feed_24,  data, length)
-*/
-	CASE_BS2B(FMT_S24_LE, long,          bs2b_cross_feed_24,  data, length)
-	CASE_BS2B(FMT_S24_BE, long,          bs2b_cross_feed_24,  data, length)
-	CASE_BS2B(FMT_S24_NE, long,          bs2b_cross_feed_24,  data, length)
-
-/*
-	CASE_BS2B(FMT_U32_LE, unsigned long, bs2b_cross_feed_32,  data, length)
-	CASE_BS2B(FMT_U32_BE, unsigned long, bs2b_cross_feed_32,  data, length)
-	CASE_BS2B(FMT_U32_NE, unsigned long, bs2b_cross_feed_32,  data, length)
-*/
-	CASE_BS2B(FMT_S32_LE, long,          bs2b_cross_feed_32,  data, length)
-	CASE_BS2B(FMT_S32_BE, long,          bs2b_cross_feed_32,  data, length)
-	CASE_BS2B(FMT_S32_NE, long,          bs2b_cross_feed_32,  data, length)
-
-	CASE_BS2B(FMT_FLOAT,  float,         bs2b_cross_feed_f32, data, length)
+	#define ENABLE_CASE_C
+	#include "case.c"
+	#undef ENABLE_CASE_C
         default:
 		;
 	}
