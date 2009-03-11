@@ -247,14 +247,8 @@ public:
 		{
 			int sample_count = chunk->get_sample_count();
 			audio_sample *sample = chunk->get_data();
-
 			bs2b.set_srate( chunk->get_srate() );
-
-			while( sample_count-- )
-			{
-				bs2b.cross_feed( sample );
-				sample += 2;
-			}
+			bs2b.cross_feed( sample, sample_count );
 		}
 
 		return true;
