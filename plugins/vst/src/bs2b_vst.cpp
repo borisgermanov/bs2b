@@ -172,6 +172,8 @@ void bs2b_effect::processReplacing( float **inputs, float **outputs,
 	float sample[ 2 ];
 	float *in1, *in2, *out1, *out2;
 
+	if( sampleFrames <= 0 ) return;
+
 	in1  = inputs[ 0 ];
 	in2  = inputs[ 1 ];
 	out1 = outputs[ 0 ];
@@ -194,6 +196,8 @@ void bs2b_effect::processDoubleReplacing( double **inputs, double **outputs,
 {
 	double sample[ 2 ];
 	double *in1, *in2, *out1, *out2;
+
+	if( sampleFrames <= 0 ) return;
 
 	in1  = inputs[ 0 ];
 	in2  = inputs[ 1 ];
