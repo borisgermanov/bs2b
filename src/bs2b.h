@@ -28,6 +28,16 @@
 
 #include "bs2bversion.h"
 
+#if defined(__CYGWIN__)
+# include "bs2bconfig.h"
+#elif defined(__MINGW32__)
+# include "bs2bmingwconfig.h"
+#elif defined(_MSC_VER)
+# include "bs2bmsvcconfig.h"
+#else
+# include "bs2bconfig.h"
+#endif
+
 #if HAVE_STDINT_H
 #include <stdint.h>
 #else

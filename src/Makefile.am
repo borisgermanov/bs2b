@@ -5,10 +5,13 @@ bin_PROGRAMS = \
 	bs2bconvert \
 	bs2bstream
 
+BUILT_SOURCES = bs2bconfig.h
+
 
 bs2b_HEADERS = \
 	bs2b.h \
 	bs2bclass.h \
+	bs2bconfig.h \
 	bs2bversion.h
 
 bs2bdir = $(includedir)/bs2b
@@ -37,3 +40,8 @@ bs2bstream_LDADD = \
 
 bs2bstream_SOURCES = \
 	bs2bstream.c
+
+
+EXTRA_DIST = \
+	bs2bmingwconfig.h \
+	bs2bmsvcconfig.h

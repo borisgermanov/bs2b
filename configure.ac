@@ -7,6 +7,7 @@ AC_CONFIG_AUX_DIR([build-aux])
 AM_INIT_AUTOMAKE([1.10.1 -Wall foreign subdir-objects
                   dist-zip dist-bzip2 dist-lzma])
 AC_CONFIG_SRCDIR([src/bs2b.h])
+AC_CONFIG_HEADERS([config.h src/bs2bconfig.h])
 
 # Checks for programs.
 AC_PROG_CXX
