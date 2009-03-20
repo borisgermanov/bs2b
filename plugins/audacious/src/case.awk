@@ -5,7 +5,7 @@ BEGIN {
 }
 
 {
-	if (NF == 5) {
+	if (NF == 3) {
 		# Trim
 		for (i = 1; i <= NF; i++) {
 			sub("^ +", "", $i);
@@ -18,38 +18,15 @@ BEGIN {
 
 		CASE_LABEL=$1
 		DATA_TYPE=$2
-		DATA_ENDIAN=$3
-		SWAP_FUNCTION=$4
-		EFFECT_FUNCTION=$5
+		EFFECT_FUNCTION=$3
 
 		# Print filled template
 		print "\
 	" CASE_LABEL "\n\
 		{\n\
-			gint num = length / sizeof(" DATA_TYPE ") / 2;\n\
-			" DATA_TYPE " * sample = (" DATA_TYPE " *)*data;\n\
-			while (num--) {"
-
-		if (DATA_ENDIAN != "AB_SYSTEM_ENDIAN") {
-			print "\
-				#if " DATA_ENDIAN " != AB_SYSTEM_ENDIAN\n\
-					" SWAP_FUNCTION "(sample);\n\
-				#endif"
-		}
-
-		print "\
-				" EFFECT_FUNCTION "(bs2b, sample);"
-
-		if (DATA_ENDIAN != "AB_SYSTEM_ENDIAN") {
-			print "\
-				#if " DATA_ENDIAN " != AB_SYSTEM_ENDIAN\n\
-					" SWAP_FUNCTION "(sample);\n\
-				#endif"
-		}
-
-		print "\
-				sample += 2;\n\
-			}\n\
+			const gint num = length / sizeof(" DATA_TYPE ") / 2;\n\
+			" DATA_TYPE " * const sample = (" DATA_TYPE " *)*data;\n\
+			" EFFECT_FUNCTION "(bs2b, sample, num);\n\
 		}\n\
 		break;"
 	}

@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.63])
-AC_INIT([audacious-bs2b], [0.9.0], [sebastian@pipping.org])
+AC_INIT([audacious-bs2b], [0.9.1], [sebastian@pipping.org])
 AC_CONFIG_AUX_DIR([build-aux])
 AM_INIT_AUTOMAKE([1.10.1 -Wall foreign subdir-objects
                   dist-zip dist-bzip2 dist-lzma])
@@ -31,10 +31,11 @@ AC_SUBST([AUDACIOUS_EFFECT_PLUGIN_DIR])
 
 
 # Checks for libraries.
+BS2B_REQUIRED=3.0.0
 PKG_CHECK_MODULES([BS2B], [
-	libbs2b >= 2.2.1
+	libbs2b >= ${BS2B_REQUIRED}
 ], [], [
-	AC_MSG_ERROR(Please install libbs2b 2.2.1 or later.)
+	AC_MSG_ERROR(Please install libbs2b ${BS2B_REQUIRED} or later.)
 ])
 
 

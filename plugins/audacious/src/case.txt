@@ -1,12 +1,12 @@
-FMT_S8,                 char,           AB_SYSTEM_ENDIAN,  NOOP,     bs2b_cross_feed_s8
-FMT_U8,                 unsigned char,  AB_SYSTEM_ENDIAN,  NOOP,     bs2b_cross_feed_u8
-
-FMT_S16_LE,             short,          AB_LITTLE_ENDIAN,  swap_16,  bs2b_cross_feed_16
-FMT_S16_BE,             short,          AB_BIG_ENDIAN,     swap_16,  bs2b_cross_feed_16
-FMT_S16_NE,             short,          AB_SYSTEM_ENDIAN,  NOOP,     bs2b_cross_feed_16
-
-FMT_S32_LE,             long,           AB_LITTLE_ENDIAN,  swap_32,  bs2b_cross_feed_32
-FMT_S32_BE,             long,           AB_BIG_ENDIAN,     swap_32,  bs2b_cross_feed_32
-FMT_S32_NE,             long,           AB_SYSTEM_ENDIAN,  NOOP,     bs2b_cross_feed_32
-
-FMT_FLOAT,              float,          AB_SYSTEM_ENDIAN,  NOOP,     bs2b_cross_feed_f32
+FMT_FLOAT,   float,    bs2b_cross_feed_f
+FMT_S32_NE,  int32_t,  bs2b_cross_feed_s32
+FMT_S32_BE,  int32_t,  bs2b_cross_feed_s32be
+FMT_S32_LE,  int32_t,  bs2b_cross_feed_s32le
+FMT_S16_NE,  int16_t,  bs2b_cross_feed_s16
+FMT_S16_BE,  int16_t,  bs2b_cross_feed_s16be
+FMT_S16_LE,  int16_t,  bs2b_cross_feed_s16le
+FMT_S8,      int8_t,   bs2b_cross_feed_s8
+FMT_U8,      uint8_t,  bs2b_cross_feed_u8
+FMT_S24_NE,  int24_t,  bs2b_cross_feed_s24
+FMT_S24_BE,  int24_t,  bs2b_cross_feed_s24be
+FMT_S24_LE,  int24_t,  bs2b_cross_feed_s24le
