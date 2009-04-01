@@ -10,14 +10,15 @@ AC_CONFIG_SRCDIR([src/plugin.c])
 AC_CONFIG_HEADERS([config.h])
 
 
-AC_C_BIGENDIAN
-
-
 # Checks for programs.
 AC_PROG_CC
 AC_DISABLE_STATIC  # Must come before AC_PROG_LIBTOOL
 AC_PROG_LIBTOOL
 PKG_PROG_PKG_CONFIG
+
+
+AC_C_BIGENDIAN
+
 
 PKG_CHECK_MODULES([AUDACIOUS], [
 	audacious >= 1.5.1
