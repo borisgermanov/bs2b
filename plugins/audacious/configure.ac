@@ -26,7 +26,7 @@ PKG_CHECK_MODULES([AUDACIOUS], [
 ], [], [
 	AC_MSG_ERROR(Please install Audacious 1.5.1 or later.)
 ])
-AUDACIOUS_EFFECT_PLUGIN_DIR=`pkg-config --variable=effect_plugin_dir audacious | sed 's|/$||'`
+AUDACIOUS_EFFECT_PLUGIN_DIR=`pkg-config --variable=effect_plugin_dir audacious | sed -e 's|/$||' -e 's|^/usr/|$(prefix)/|'`
 AC_SUBST([AUDACIOUS_EFFECT_PLUGIN_DIR])
 
 
