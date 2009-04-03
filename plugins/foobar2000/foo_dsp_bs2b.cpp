@@ -33,7 +33,11 @@
 
 #include "resource.h"
 
-static char _bs2b_version[]   = "2.2.0";
+#if BS2B_VERSION_MAJOR < 3
+#error libbs2b version 3.0.0 or higher required.
+#endif
+
+static char _bs2b_version[]   = "3.0.0";
 static char _bs2b_name[]      = "bs2b";
 static char _bs2b_full_name[] = "Bauer stereophonic-to-binaural DSP";
 static char _bs2b_about[]     =
@@ -89,15 +93,19 @@ private:
 	void update_display()
 	{
 		HWND wnd = get_wnd();
-		LRESULT level = SendDlgItemMessage( wnd,
-			IDC_SLIDER_LEVEL, TBM_GETPOS, 0, 0 );
-		if( BST_CHECKED ==
-			SendDlgItemMessage( wnd, IDC_CHECK_EASY, BM_GETCHECK, 0, 0 ) )
-		{
-			level += BS2B_CLEVELS;
-		}
 
-		m_params.m_level = level;
+		LRESULT level_feed = SendDlgItemMessage( wnd,
+			IDC_SLIDER_LEVEL_FEED, TBM_GETPOS, 0, 0 );
+		LRESULT level_fcut = SendDlgItemMessage( wnd,
+			IDC_SLIDER_LEVEL_FCUT, TBM_GETPOS, 0, 0 );
+
+		uSetDlgItemText( wnd, IDC_STATIC_LEVEL_FEED, pfc::string8() <<
+			level_feed / 10 << "." << level_feed % 10 << " dB" );
+		uSetDlgItemText( wnd, IDC_STATIC_LEVEL_FCUT, pfc::string8() <<
+			level_fcut << " Hz, " << ( 18700 / level_fcut ) * 10 << " us" );
+
+		m_params.m_level = level_fcut | ( level_feed << 16 );
+
 		if( m_dirty )
 		{
 			dsp_preset_impl data;
@@ -121,15 +129,21 @@ public:
 		case WM_INITDIALOG:
 			{
 				HWND wnd = get_wnd();
-				HWND slider = GetDlgItem( wnd, IDC_SLIDER_LEVEL );
-				SendMessage( slider, TBM_SETRANGE, TRUE,
-					MAKELONG( 1, BS2B_CLEVELS ) );
-				SendMessage( slider, TBM_SETPOS, TRUE,
-					m_params.m_level > BS2B_CLEVELS ?
-					m_params.m_level - BS2B_CLEVELS : m_params.m_level );
-				SendDlgItemMessage( wnd, IDC_CHECK_EASY, BM_SETCHECK,
-					m_params.m_level > BS2B_CLEVELS ?
-					BST_CHECKED : BST_UNCHECKED, 0 );
+
+				HWND slider_feed = GetDlgItem( wnd, IDC_SLIDER_LEVEL_FEED );
+				SendMessage( slider_feed, TBM_SETRANGE, FALSE,
+					MAKELONG( BS2B_MINFEED, BS2B_MAXFEED ) );
+				SendMessage( slider_feed, TBM_CLEARTICS, FALSE, 0 );
+				SendMessage( slider_feed, TBM_SETPOS, TRUE,
+					m_params.m_level >> 16 );
+
+				HWND slider_fcut = GetDlgItem( wnd, IDC_SLIDER_LEVEL_FCUT );
+				SendMessage( slider_fcut, TBM_SETRANGE, FALSE,
+					MAKELONG( BS2B_MINFCUT, BS2B_MAXFCUT ) );
+				SendMessage( slider_fcut, TBM_CLEARTICS, FALSE, 0 );
+				SendMessage( slider_fcut, TBM_SETPOS, TRUE,
+					m_params.m_level & 0xffff );
+
 				update_display();
 			}
 			break;
@@ -144,8 +158,22 @@ public:
 		case WM_COMMAND:
 			switch( wp )
 			{
-			case IDC_CHECK_EASY:
+			case IDC_BUTTON_DEFAULT:
+			case IDC_BUTTON_CMOY:
+			case IDC_BUTTON_JMEIER:
 				{
+					uint32_t level = BS2B_DEFAULT_CLEVEL;
+					if( wp == IDC_BUTTON_CMOY )   level = BS2B_CMOY_CLEVEL;
+					if( wp == IDC_BUTTON_JMEIER ) level = BS2B_JMEIER_CLEVEL;
+
+					HWND wnd = get_wnd();
+					
+					HWND slider_feed = GetDlgItem( wnd, IDC_SLIDER_LEVEL_FEED );
+					SendMessage( slider_feed, TBM_SETPOS, TRUE, level >> 16 );
+
+					HWND slider_fcut = GetDlgItem( wnd, IDC_SLIDER_LEVEL_FCUT );
+					SendMessage( slider_fcut, TBM_SETPOS, TRUE, level & 0xffff );
+
 					m_dirty = true;
 					update_display();
 				}
@@ -172,9 +200,9 @@ public:
 					end_dialog( 0 );
 				}
 				break;
-			} // switch
+			} // switch( wp )
 			break;
-		} // switch
+		} // switch( msg )
 		
 		return 0;
 	} // on_message()
