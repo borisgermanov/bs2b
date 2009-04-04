@@ -37,31 +37,7 @@
 #endif
 
 
-#define AB_SWAP_16(x) (\
-	  ((x & 0x00ff) << 8)\
-	| ((x & 0xff00) >> 8))
-
-#define AB_SWAP_32(x) (\
-	  (((x & 0x000000ff) >>  0) << 24)\
-	| (((x & 0x0000ff00) >>  8) << 16)\
-	| (((x & 0x00ff0000) >> 16) <<  8)\
-	| (((x & 0xff000000) >> 24) <<  0))
-
-
 static t_bs2bdp bs2b = NULL;
-
-
-static void swap_16(void * pair) {
-	unsigned short * p = (unsigned short *)pair;
-	p[0] = AB_SWAP_16(p[0]);
-	p[1] = AB_SWAP_16(p[1]);
-}
-
-static void swap_32(void * pair) {
-	unsigned long * p = (unsigned long *)pair;
-	p[0] = AB_SWAP_32(p[0]);
-	p[1] = AB_SWAP_32(p[1]);
-}
 
 
 static void cleanup() {
