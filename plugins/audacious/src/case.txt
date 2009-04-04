@@ -13,6 +13,3 @@ FMT_U16_BE,  uint16_t, bs2b_cross_feed_u16be
 FMT_U16_LE,  uint16_t, bs2b_cross_feed_u16le
 FMT_S8,      int8_t,   bs2b_cross_feed_s8
 FMT_U8,      uint8_t,  bs2b_cross_feed_u8
-FMT_S24_NE,  int24_t,  bs2b_cross_feed_s24
-FMT_S24_BE,  int24_t,  bs2b_cross_feed_s24be
-FMT_S24_LE,  int24_t,  bs2b_cross_feed_s24le
