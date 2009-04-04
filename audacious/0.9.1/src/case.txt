@@ -1,0 +1,15 @@
+FMT_FLOAT,   float,    bs2b_cross_feed_f
+FMT_S32_NE,  int32_t,  bs2b_cross_feed_s32
+FMT_S32_BE,  int32_t,  bs2b_cross_feed_s32be
+FMT_S32_LE,  int32_t,  bs2b_cross_feed_s32le
+FMT_U32_NE,  uint32_t, bs2b_cross_feed_u32
+FMT_U32_BE,  uint32_t, bs2b_cross_feed_u32be
+FMT_U32_LE,  uint32_t, bs2b_cross_feed_u32le
+FMT_S16_NE,  int16_t,  bs2b_cross_feed_s16
+FMT_S16_BE,  int16_t,  bs2b_cross_feed_s16be
+FMT_S16_LE,  int16_t,  bs2b_cross_feed_s16le
+FMT_U16_NE,  uint16_t, bs2b_cross_feed_u16
+FMT_U16_BE,  uint16_t, bs2b_cross_feed_u16be
+FMT_U16_LE,  uint16_t, bs2b_cross_feed_u16le
+FMT_S8,      int8_t,   bs2b_cross_feed_s8
+FMT_U8,      uint8_t,  bs2b_cross_feed_u8
