@@ -20,6 +20,22 @@ PKG_PROG_PKG_CONFIG
 AC_C_BIGENDIAN
 
 
+AC_ARG_WITH(effect-level, [
+===========================================================================
+Extra options:
+AS_HELP_STRING([--with-effect-level=VAL], [Override effect level])
+AS_HELP_STRING([], [(one of the BS2B_*LEVEL constants from bs2b.h)])
+===========================================================================], [
+	if test "x${withval}" = "x"; then
+		AC_MSG_ERROR([No value given for option --with-effect-level])
+	fi
+	AB_EFFECT_LEVEL=${withval}
+], [
+	AB_EFFECT_LEVEL=BS2B_DEFAULT_CLEVEL
+])
+AC_DEFINE_UNQUOTED(AB_EFFECT_LEVEL, ${AB_EFFECT_LEVEL}, [Effect level to apply])
+
+
 PKG_CHECK_MODULES([AUDACIOUS], [
 	audacious >= 1.5.1
 	glib-2.0 >= 2.14

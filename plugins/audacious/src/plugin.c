@@ -21,20 +21,7 @@
 #include <string.h>
 #include <stdio.h>
 
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#else
-# define VERSION "?.?.?"
-#endif
-
-#define AB_LITTLE_ENDIAN 0
-#define AB_BIG_ENDIAN 1
-
-#ifdef WORDS_BIGENDIAN
-# define SYSTEM_ENDIAN AB_BIG_ENDIAN
-#else
-# define SYSTEM_ENDIAN AB_LITTLE_ENDIAN
-#endif
+#include <config.h>
 
 
 static t_bs2bdp bs2b = NULL;
@@ -80,7 +67,7 @@ void init() {
 	if (bs2b == NULL) {
 		return;
 	}
-	bs2b_set_level(bs2b, BS2B_DEFAULT_CLEVEL);
+	bs2b_set_level(bs2b, AB_EFFECT_LEVEL);
 }
 
 
