@@ -102,7 +102,7 @@ private:
 		uSetDlgItemText( wnd, IDC_STATIC_LEVEL_FEED, pfc::string8() <<
 			level_feed / 10 << "." << level_feed % 10 << " dB" );
 		uSetDlgItemText( wnd, IDC_STATIC_LEVEL_FCUT, pfc::string8() <<
-			level_fcut << " Hz, " << ( 18700 / level_fcut ) * 10 << " us" );
+			level_fcut << " Hz, " << bs2b_level_delay( level_fcut ) << " us" );
 
 		m_params.m_level = level_fcut | ( level_feed << 16 );
 
