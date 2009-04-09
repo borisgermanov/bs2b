@@ -27,30 +27,65 @@
 #include <audioeffectx.h>
 #include <bs2bclass.h>
 
+#if BS2B_VERSION_MAJOR < 3
+#error libbs2b version 3.0.0 or higher required.
+#endif
+
 // Parameters
 enum
 {
-	PARAM_CROSSF,
-	PARAM_EASY,
+	PARAM_LEVEL_FEED,
+	PARAM_LEVEL_FCUT,
+	PARAM_LEVEL_DEFS,
 	PARAM__MAX
+};
+
+// Switch of default sets
+enum
+{
+	PARAM_LEVEL_DEF_OFF,
+	PARAM_LEVEL_DEF_DEFAULT,
+	PARAM_LEVEL_DEF_CMOY,
+	PARAM_LEVEL_DEF_JMEIER,
+	PARAM_LEVEL_DEF__MAX
+};
+
+static char const *level_def_name[] = {
+	"Off",
+	"Def",
+	"C.Moy",
+	"J.Meier"
 };
 
 class bs2b : public bs2b_base
 {
 public:
-	inline int get_crossf()
+	float get_level_feed_norm()
 	{
-		return ( ( get_level() - 1 ) % BS2B_CLEVELS ) + 1;
+		return(
+			( float )( get_level_feed() - BS2B_MINFEED ) /
+			( float )( BS2B_MAXFEED - BS2B_MINFEED ) );
 	}
 
-	inline int get_easy()
+	void set_level_feed_norm( float feed_f )
 	{
-		return get_level() > BS2B_CLEVELS;
+		set_level_feed(
+			( int )( feed_f * ( BS2B_MAXFEED - BS2B_MINFEED ) ) +
+			BS2B_MINFEED );
 	}
 
-	inline void set_crossf_easy( int crossf, int easy )
+	float get_level_fcut_norm()
 	{
-		set_level( crossf + easy * BS2B_CLEVELS );
+		return(
+			( float )( get_level_fcut() - BS2B_MINFCUT ) /
+			( float )( BS2B_MAXFCUT - BS2B_MINFCUT ) );
+	}
+
+	void set_level_fcut_norm( float fcut_f )
+	{
+		set_level_fcut(
+			( int )( fcut_f * ( BS2B_MAXFCUT - BS2B_MINFCUT ) ) +
+			BS2B_MINFCUT );
 	}
 };
 
@@ -90,6 +125,7 @@ public:
 	virtual VstInt32 getVendorVersion();
 
 protected:
+	int param_defs;
 	char m_programName[ kVstMaxProgNameLen + 1 ];
 };
 

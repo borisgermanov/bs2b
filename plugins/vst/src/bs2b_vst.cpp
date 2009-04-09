@@ -21,6 +21,8 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+#include <stdio.h>
+
 #include "bs2b_effect.h"
 #include "bs2b_editor.h"
 
@@ -29,20 +31,21 @@ AudioEffect *createEffectInstance( audioMasterCallback audioMaster )
 	return new bs2b_effect( audioMaster );
 }
 
-//
 bs2b_effect::bs2b_effect( audioMasterCallback audioMaster )
-: AudioEffectX( audioMaster, 1, PARAM__MAX )  // 1 program
+: AudioEffectX( audioMaster, 1, PARAM__MAX ) // 1 program
 {
-	setNumInputs( 2 );		// stereo in
-	setNumOutputs( 2 );		// stereo out
-	setUniqueID( 'bs2b' );	// identify
-	canProcessReplacing();	// supports replacing output
-	canDoubleReplacing();	// supports double precision processing
+	setNumInputs( 2 );     // stereo in
+	setNumOutputs( 2 );    // stereo out
+	setUniqueID( 'bs2b' ); // identify
+	canProcessReplacing(); // supports replacing output
+	canDoubleReplacing();  // supports double precision processing
+
+	param_defs = 0;
+	vst_strncpy( m_programName, "Default", kVstMaxProgNameLen );
 
 	// EDITOR
-	editor = new bs2b_editor( this );
-
-	vst_strncpy( m_programName, "Default", kVstMaxProgNameLen );
+	//editor = new bs2b_editor( this );
+	editor = 0;
 }
 
 bs2b_effect::~bs2b_effect() {}
@@ -59,20 +62,35 @@ void bs2b_effect::getProgramName( char *name )
 
 void bs2b_effect::setParameter( VstInt32 index, float value )
 {
-	int crossf = bs2b.get_crossf();
-	int easy   = bs2b.get_easy();
-
 	switch( index )
 	{
-	case PARAM_CROSSF:
-		crossf = ( int )( value * ( BS2B_CLEVELS - 1 ) + 0.5f ) + 1;
+	case PARAM_LEVEL_FEED:
+		if( ! param_defs )
+			bs2b.set_level_feed_norm( value );
 		break;
-	case PARAM_EASY:
-		easy = value >= 0.5f;
+	case PARAM_LEVEL_FCUT:
+		if( ! param_defs )
+			bs2b.set_level_fcut_norm( value );
 		break;
-	}
-
-	bs2b.set_crossf_easy( crossf, easy );
+	case PARAM_LEVEL_DEFS:
+		param_defs = ( int )( value * PARAM_LEVEL_DEF__MAX - 0.01f );
+		switch( param_defs )
+		{
+		case PARAM_LEVEL_DEF_DEFAULT:
+			bs2b.set_level( BS2B_DEFAULT_CLEVEL );
+			break;
+		case PARAM_LEVEL_DEF_CMOY:
+			bs2b.set_level( BS2B_CMOY_CLEVEL );
+			break;
+		case PARAM_LEVEL_DEF_JMEIER:
+			bs2b.set_level( BS2B_JMEIER_CLEVEL );
+			break;
+		default:
+			param_defs = 0;
+			break;
+		} // switch( param_defs )
+		break;
+	} // switch( index )
 
 	if( editor )
 		( ( AEffGUIEditor * )editor )->setParameter( index, value );
@@ -82,62 +100,80 @@ float bs2b_effect::getParameter( VstInt32 index )
 {
 	switch( index )
 	{
-	case PARAM_CROSSF:
-		return ( float )( bs2b.get_crossf() - 1 ) / ( float )( BS2B_CLEVELS - 1 );
-	case PARAM_EASY:
-		return ( float )( bs2b.get_easy() );
+	case PARAM_LEVEL_FEED:
+		return bs2b.get_level_feed_norm();
+	case PARAM_LEVEL_FCUT:
+		return bs2b.get_level_fcut_norm();
+	case PARAM_LEVEL_DEFS:
+		return ( float )param_defs / ( PARAM_LEVEL_DEF__MAX - 1 );
 	default:
-		return .0f;
-	}
+		return 0.0f;
+	} // switch( index )
 }
 
 void bs2b_effect::getParameterName( VstInt32 index, char *label )
 {
 	switch( index )
 	{
-	case PARAM_CROSSF:
+	case PARAM_LEVEL_FEED:
 		vst_strncpy( label, "Feed", kVstMaxParamStrLen );
 		break;
-	case PARAM_EASY:
-		vst_strncpy( label, "Easy", kVstMaxParamStrLen );
+	case PARAM_LEVEL_FCUT:
+		vst_strncpy( label, "FCut", kVstMaxParamStrLen );
 		break;
-	}
+	case PARAM_LEVEL_DEFS:
+		vst_strncpy( label, "Defs", kVstMaxParamStrLen );
+		break;
+	} // switch( index )
 }
 
 void bs2b_effect::getParameterDisplay( VstInt32 index, char *text )
 {
+	char string[ 64 ];
+
 	switch( index )
 	{
-	case PARAM_CROSSF:
-		switch( bs2b.get_crossf() )
+	case PARAM_LEVEL_FEED:
 		{
-		case BS2B_HIGH_CLEVEL:
-			vst_strncpy( text, "max", kVstMaxParamStrLen );
-			break;
-		case BS2B_MIDDLE_CLEVEL:
-			vst_strncpy( text, "mid", kVstMaxParamStrLen );
-			break;
-		case BS2B_LOW_CLEVEL:
-			vst_strncpy( text, "low", kVstMaxParamStrLen );
-			break;
+			int feed = bs2b.get_level_feed();
+			sprintf( string, "%d.%d", feed / 10, feed % 10 );
+			vst_strncpy( text, string, kVstMaxParamStrLen );
 		}
 		break;
-	case PARAM_EASY:
-		vst_strncpy( text, bs2b.get_easy() ? "on" : "off",
-			kVstMaxParamStrLen );
+	case PARAM_LEVEL_FCUT:
+		{
+			sprintf( string, "%d/%d",
+				bs2b.get_level_fcut(), bs2b.get_level_delay() );
+			vst_strncpy( text, string, kVstMaxParamStrLen );
+		}
 		break;
-	}
+	case PARAM_LEVEL_DEFS:
+		{
+			vst_strncpy( text, level_def_name[ param_defs ], kVstMaxParamStrLen );
+		}
+		break;
+	} // switch( index )
 }
 
 void bs2b_effect::getParameterLabel( VstInt32 index, char *label )
 {
-	// no label
-	*label = '\0';
+	switch( index )
+	{
+	case PARAM_LEVEL_FEED:
+		vst_strncpy( label, " dB", kVstMaxParamStrLen );
+		break;
+	case PARAM_LEVEL_FCUT:
+		vst_strncpy( label, " Hz/us", kVstMaxParamStrLen );
+		break;
+	case PARAM_LEVEL_DEFS:
+		vst_strncpy( label, " ", kVstMaxParamStrLen );
+		break;
+	} // switch( index )
 }
 
 void bs2b_effect::setSampleRate( float sampleRate )
 {
-	bs2b.set_srate( ( long )sampleRate );
+	bs2b.set_srate( ( uint32_t )sampleRate );
 }
 
 bool bs2b_effect::getEffectName( char *name )
@@ -162,8 +198,11 @@ bool bs2b_effect::getVendorString( char *text )
 
 VstInt32 bs2b_effect::getVendorVersion()
 {
-	// Version 1.2.0
-	return ( 1 << 16 ) | ( 2 << 8 ) | ( 0 );
+	// Version 2.0.0
+	return(
+		( ( VstInt32 )2 << 16 ) |
+		( ( VstInt32 )0 << 8 ) |
+		( ( VstInt32 )0 ) );
 }
 
 void bs2b_effect::processReplacing( float **inputs, float **outputs,

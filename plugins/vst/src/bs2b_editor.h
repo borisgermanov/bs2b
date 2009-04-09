@@ -40,8 +40,11 @@ public:
 	virtual void valueChanged( CDrawContext *context, CControl *control );
 
 private:
-	CHorizontalSlider *crossf_fader;
-	CHorizontalSlider *easy_fader;
+	CHorizontalSlider *feed_fader;
+	CHorizontalSlider *fcut_fader;
+
+	CParamDisplay *feed_display;
+	CParamDisplay *fcut_display;
 
 	CBitmap *hBackground;
 };
