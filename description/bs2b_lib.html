@@ -9,6 +9,7 @@
 
 
 
+
   
   <meta content="Boris Mikhaylov" name="author"></head><body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);" alink="#000099" link="#000099" vlink="#990099">
 <table style="width: 700px; text-align: left; font-family: times new roman,times,serif;" border="0" cellpadding="2" cellspacing="2">
@@ -19,7 +20,9 @@ description.</span></big><br>
       <br>
 The <a href="http://bs2b.sourceforge.net/" target="_top">bs2b</a>
 library is simple
-to use. See table 1 for example. It is a reductive code of 'bs2bstream.c'. The 'bs2b.h', 'bs2bclass.h' and 'bs2bconvert.c' files of the source code
+to use. See table 1 for example. It is a reductive code of
+'bs2bstream.c'. The 'bs2b.h', 'bs2bclass.h' and 'bs2bconvert.c' files
+of the source code
 package can help also.<br>
 You can use a 'bs2bstream' with '<a href="http://lame.sourceforge.net/" target="_top">lame</a>' by a command line like this:<br>&nbsp; lame -t --decode test-44-16.wav - | bs2bstream -4 | \<br>&nbsp;&nbsp;&nbsp; lame -r -x -m j -s 44.1 --bitwidth 16 --preset extreme - test.mp3<br>
 or without of '-x' swap bytes of input file, like this:<br>&nbsp; lame -t --decode test-44-16.wav - | bs2bstream -4 | \<br>&nbsp;&nbsp;&nbsp; lame -r -m j -s 44.1 --bitwidth 16 --preset extreme - test.mp3<br><br>
@@ -99,7 +102,7 @@ int main()<br>
       </table>
 
       <br>
-      <hr style="width: 100%; height: 2px;">Copyright (c) 2006&nbsp;
+      <hr style="width: 100%; height: 2px;">Copyright (c) 2005-2009&nbsp;
 Boris Mikhaylov &lt; <a href="http://www.tmn.ru/%7Ebor" target="_top">http://www.tmn.ru/~bor</a>&gt;</td>
     </tr>
   </tbody>

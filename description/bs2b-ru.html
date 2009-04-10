@@ -1,20 +1,16 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
-<head>
-  <title>Bauer stereophonic-to-binaural DSP</title>
+<html><head><title>Bauer stereophonic-to-binaural DSP</title>
+
+
+
+
+  
   <meta content="Boris Mikhaylov" name="author">
-  <meta http-equiv="Content-Type"
- content="text/html; charset=windows-1251">
-</head>
-<body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);"
- alink="#000099" link="#000099" vlink="#990099">
-<table
- style="width: 700px; text-align: left; font-family: times new roman,times,serif;"
- border="0" cellpadding="2" cellspacing="2">
+  <meta http-equiv="Content-Type" content="text/html; charset=windows-1251"></head><body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);" alink="#000099" link="#000099" vlink="#990099">
+<table style="width: 700px; text-align: left; font-family: times new roman,times,serif;" border="0" cellpadding="2" cellspacing="2">
   <tbody>
     <tr>
-      <td style="vertical-align: top;"><big><big><span
- style="font-weight: bold;">Bauer stereophonic-to-binaural DSP.</span></big></big><br>
+      <td style="vertical-align: top;"><big><big><span style="font-weight: bold;">Bauer stereophonic-to-binaural DSP.</span></big></big><br>
       <big><span style="font-weight: bold;"><br>
       <a name="Preface"></a>1.
 Предисловие.</span></big><br>
@@ -30,8 +26,7 @@
 расстояние, и с частично ослабленными верхними частотами из-зи эффекта
 тени головы.
 И задержка до дальнего уха несколько больше на низких частотах чем на
-высоких. Bauer stereophonic-to-binaural DSP (<a
- href="http://bs2b.sourceforge.net/" target="_top">bs2b</a>)
+высоких. Bauer stereophonic-to-binaural DSP (<a href="http://bs2b.sourceforge.net/" target="_top">bs2b</a>)
 предназначен для улучшения прослушивания аудио стерео программ в
 наушниках. Это улучшение хорошо было объяснено дизайнерами электронных
 схем такими как
@@ -70,8 +65,7 @@ Moy <a href="#r3">[3]</a>, значение частоты среза ФОНЧ должно быть
 слушал до этого, наушниковых плагинов для аудиоплееров не удовлетворил
 меня. Основновное ухудшение звука наушниковыми DSP производится
 эффектом гребенчатого фильтра из-за использования FFT свертки с
-линейной ФЧХ для фильтрации. Есть плагин <a
- href="http://www.stereo-balance.net/" target="_top">HeadPlug</a>
+линейной ФЧХ для фильтрации. Есть плагин <a href="http://www.stereo-balance.net/" target="_top">HeadPlug</a>
 который имеет опцию 'decomb', и автор пишет об этом: "The way the
 plugin does
 this is
@@ -80,8 +74,7 @@ really damn-ass straight-forward from a technical point of view". Я
 не производит симуляцию какого либо окружения и не производит какую
 либо HRTF <a href="#r8">[8]</a> трансформацию в высокочастотном
 диапазоне. Некоторое применение HRTF в высокочастотном диапазоне уже
-сделано наушниками, исключая бинауральные наушники такие как <a
- href="http://www.etymotic.com/" target="_top">Etymotic</a> ER-4B.<br>
+сделано наушниками, исключая бинауральные наушники такие как <a href="http://www.etymotic.com/" target="_top">Etymotic</a> ER-4B.<br>
 Итак, пробуйте использовать bs2b чтобы почуствовать звук немного вне
 вашей головы для облегчения работы вашего мозга.<br>
       <br>
@@ -98,9 +91,7 @@ perl программу которая вычисляет частотную и временную зависимости bs2b
 с помощью H-преобразования <a href="bs2b.html#r5">[5]</a>.<br>
       <br>
       <span style="font-weight: bold;">Table 2.1. bs2b-H-transform.pl.</span><br>
-      <table
- style="width: 100%; background-color: rgb(255, 255, 204); text-align: left; font-family: courier new,courier,monospace;"
- border="0" cellpadding="2" cellspacing="2">
+      <table style="width: 100%; background-color: rgb(255, 255, 204); text-align: left; font-family: courier new,courier,monospace;" border="0" cellpadding="2" cellspacing="2">
         <tbody>
           <tr>
             <td style="vertical-align: top;"><font size="-1">#!/usr/bin/perl<br>
@@ -129,12 +120,8 @@ data that below.</font><br>
 -2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </font><font size="-1"># high
 easy crossfeed
 level</font><br>
-            <font size="-1"># perl bs2b-H-transform.pl 500 -9 -1.8</font><font
- size="-1">&nbsp;&nbsp;&nbsp;&nbsp; # middle</font><font size="-1"> easy</font><font
- size="-1"> crossfeed level</font><br>
-            <font size="-1"># perl bs2b-H-transform.pl 360 -10 -1.6</font><font
- size="-1">&nbsp;&nbsp;&nbsp; # low</font><font size="-1"> easy</font><font
- size="-1"> crossfeed level</font><br>
+            <font size="-1"># perl bs2b-H-transform.pl 500 -9 -1.8</font><font size="-1">&nbsp;&nbsp;&nbsp;&nbsp; # middle</font><font size="-1"> easy</font><font size="-1"> crossfeed level</font><br>
+            <font size="-1"># perl bs2b-H-transform.pl 360 -10 -1.6</font><font size="-1">&nbsp;&nbsp;&nbsp; # low</font><font size="-1"> easy</font><font size="-1"> crossfeed level</font><br>
             <font size="-1"><br>
             </font><br>
             <font size="-1">$G&nbsp;&nbsp;&nbsp; = 10 ** ($Gd / 20);<br>
@@ -217,57 +204,22 @@ filter). 'LP' означает ФВЧ (lowpass filter). 'M' означает сумму этих
 которая может быть интерпретирована как bs2b действие на двухканальный
 моно сигнал.<br>
       <br>
-      <span style="font-weight: bold;">Рисунок</span><span
- style="font-weight: bold;"></span><span style="font-weight: bold;">
+      <span style="font-weight: bold;">Рисунок</span><span style="font-weight: bold;"></span><span style="font-weight: bold;">
 2.1. bs2b </span><span style="font-weight: bold;">теоретическая
 частотная характеристика</span><span style="font-weight: bold;">.</span><br>
-      <img alt="bs2b theoretical frequency response"
- src="img/bs2b_h-trans_f.png" style="width: 679px; height: 489px;"><br>
+      <img alt="bs2b theoretical frequency response" src="img/bs2b_h-trans_f.png" style="width: 679px; height: 489px;"><br>
       <br>
 На рисунке 2.2 отрицательное время представляет задержку сигнала в
 микросекундах.<br>
       <br>
-      <span style="font-weight: bold;">Рисунок</span><span
- style="font-weight: bold;"> 2.2. bs2b </span><span
- style="font-weight: bold;">теоретическая</span><span
- style="font-weight: bold;"> </span><span style="font-weight: bold;">временная
-      </span><span style="font-weight: bold;">характеристика</span><span
- style="font-weight: bold;">.</span><br>
-      <img alt="bs2b theoretical time delay response"
- src="img/bs2b_h-trans_d.png" style="width: 680px; height: 293px;"><br>
+      <span style="font-weight: bold;">Рисунок</span><span style="font-weight: bold;"> 2.2. bs2b </span><span style="font-weight: bold;">теоретическая</span><span style="font-weight: bold;"> </span><span style="font-weight: bold;">временная
+      </span><span style="font-weight: bold;">характеристика</span><span style="font-weight: bold;">.</span><br>
+      <img alt="bs2b theoretical time delay response" src="img/bs2b_h-trans_d.png" style="width: 680px; height: 293px;"><br>
       <br>
 Эти характеристики выглядят так как если бы виртуальные стерео
 громкоговорители переместились от 30
 градусов (high crossfeed level) до 60 градусов (low crossfeed
 level) по азимуту.<br>
-      <br>
-Рисунки 2.3 и 2.4 показывают результаты выше указанной программы для
-новых 'Easy'
-уровней взаимосмешения выпуска 2.1 bs2b. Показаны только установки
-low-easy уровня смешения
-'-L' и high-easy уровня смешения '-H'.<br>
-      <br>
-      <span style="font-weight: bold;">Рисунок</span><span
- style="font-weight: bold;"> 2.3. bs2b </span><span
- style="font-weight: bold;">теоретическая частотная характеристика</span><span
- style="font-weight: bold;">. 'Easy' версия.</span><br>
-      <img alt="bs2b theoretical frequency response. 'Easy' version"
- src="img/bs2b_h_e-trans_f.png" style="width: 679px; height: 489px;"><br>
-      <br>
-High-easy установка схожа с Chu Moy <a href="bs2b.html#r3">[3]</a>
-версией кроссфидера.<br>
-Рисунок 2.4 представляет характеристику временной задержки 'Easy'
-версии.<br>
-      <br>
-      <span style="font-weight: bold;">Рисунок 2.4. bs2b теоретическая </span><span
- style="font-weight: bold;">временная </span><span
- style="font-weight: bold;">характеристика. 'Easy' версия.</span><br>
-      <img alt="bs2b theoretical time delay response. 'Easy' version"
- src="img/bs2b_h_e-trans_d.png" style="width: 680px; height: 293px;"><br>
-      <br>
-Эти характеристики выглядят похожими на 'нелегкую' версию из-за
-одинакового набора частот среза для ФВЧ и малого различия в наборе
-частот среза для ФОНЧ для обеих версий.<br>
       <br>
       <big><span style="font-weight: bold;"><a name="Practical_data"></a>3.
 Эксперимент.<br>
@@ -284,11 +236,8 @@ bs2b сигнала белого шума. Три вида белого шума: двухканальный моно
 смешивания. Установка среднего уровня смешивания опущена для
 наглядности.<br>
       <br>
-      <span style="font-weight: bold;">Рисунок 3.1. bs2b </span><span
- style="font-weight: bold;">частотная характеристика</span><span
- style="font-weight: bold;">.</span><br>
-      <img alt="bs2b frequency response" src="img/bs2b_exdata_f.png"
- style="width: 678px; height: 488px;"><br>
+      <span style="font-weight: bold;">Рисунок 3.1. bs2b </span><span style="font-weight: bold;">частотная характеристика</span><span style="font-weight: bold;">.</span><br>
+      <img alt="bs2b frequency response" src="img/bs2b_exdata_f.png" style="width: 678px; height: 488px;"><br>
       <br>
 Рисунок 3.2 показывает разницу между частотным анализом реальной аудио
 программы и частотным анализом этой программы обработанной bs2b.<br>
@@ -296,34 +245,8 @@ bs2b сигнала белого шума. Три вида белого шума: двухканальный моно
       <span style="font-weight: bold;">Рисунок 3.2. J.S. Bach
 "BWV1066"
 "Overture" </span><span style="font-weight: bold;">разница частотного
-анализа</span><span style="font-weight: bold;"></span><span
- style="font-weight: bold;">.</span><br>
-      <img
- alt="J.S. Bach &quot;BWV1066&quot; &quot;Overture&quot; frequency analysis difference"
- src="img/Bach-BWV1066-Overture-diff.png"
- style="width: 681px; height: 294px;"><br>
-      <br>
-Рисунок 3.3 показывает практические частотные характеристики bs2b c
-установкой 'Easy High'.<br>
-      <br>
-      <span style="font-weight: bold;">Рисунок 3.3. bs2b частотная
-характеристика</span><span style="font-weight: bold;">. 'Easy' версия</span><span
- style="font-weight: bold;">.</span><br>
-      <img alt="bs2b frequency response. 'Easy' version"
- src="img/bs2b_e_exdata_f.png" style="width: 678px; height: 488px;"><br>
-      <br>
-Рисунок 3.4 как рисунок 3.2 но для 'Easy High' ('-H') и 'Easy
-Low' ('-L') установок.<br>
-      <br>
-      <span style="font-weight: bold;">Рисунок 3.4. J.S. Bach
-"BWV1066"
-"Overture" разница частотного анализа</span><span
- style="font-weight: bold;">. 'Easy' версия</span><span
- style="font-weight: bold;">.</span><br>
-      <img
- alt="J.S. Bach &quot;BWV1066&quot; &quot;Overture&quot; frequency analysis difference. 'Easy' version"
- src="img/Bach-BWV1066-Overture-diff_e.png"
- style="width: 681px; height: 294px;"><br>
+анализа</span><span style="font-weight: bold;"></span><span style="font-weight: bold;">.</span><br>
+      <img alt="J.S. Bach &quot;BWV1066&quot; &quot;Overture&quot; frequency analysis difference" src="img/Bach-BWV1066-Overture-diff.png" style="width: 681px; height: 294px;"><br>
       <br>
       <br>
       <big><span style="font-weight: bold;"><a name="References"></a>4.
@@ -334,35 +257,29 @@ Earphones
 and
 Binaural Loudspeakers.<br>
       <div style="margin-left: 40px;">JAES Volume 9
-Number 2 pp. 148-151; April 1961. <a href="http://www.aes.org/"
- target="_top">http://www.aes.org/</a><br>
+Number 2 pp. 148-151; April 1961. <a href="http://www.aes.org/" target="_top">http://www.aes.org/</a><br>
       </div>
       <br>
       <a name="r2"></a>[2] &nbsp;Siegfried Linkwitz. Improved Headphone
 Listening. Build a stereo-crossfeed circuit.<br>
-      <div style="margin-left: 40px;">Audio; December 1971. <a
- href="http://www.linkwitzlab.com/" target="_top">http://www.linkwitzlab.com/</a><br>
+      <div style="margin-left: 40px;">Audio; December 1971. <a href="http://www.linkwitzlab.com/" target="_top">http://www.linkwitzlab.com/</a><br>
       </div>
       <br>
       <a name="r3"></a>[3] &nbsp;Chu Moy. An Acoustic Simulator for
 Headphone
 Amplifiers.<br>
-      <div style="margin-left: 40px;">(C) 1998-2001 Chu Moy. <a
- href="http://headwize.com/projects/showfile.php?file=cmoy1_prj.htm"
- target="_top">http://headwize.com/projects/showfile.php?file=cmoy1_prj.htm</a><br>
+      <div style="margin-left: 40px;">(C) 1998-2001 Chu Moy. <a href="http://headwize.com/projects/showfile.php?file=cmoy1_prj.htm" target="_top">http://headwize.com/projects/showfile.php?file=cmoy1_prj.htm</a><br>
       </div>
       <br>
       <a name="r4"></a>[4] &nbsp;Jan Meier. A DIY Headphone Amplifier.<br>
-      <div style="margin-left: 40px;"><a
- href="http://www.meier-audio.de/" target="_top">http://www.meier-audio.de/</a>, <a href="http://bs2b.sourceforge.net/ARIETTA/index.html">CORDA ARIETTA</a><br>
+      <div style="margin-left: 40px;"><a href="http://www.meier-audio.de/" target="_top">http://www.meier-audio.de/</a>, <a href="http://bs2b.sourceforge.net/ARIETTA/index.html">CORDA ARIETTA</a><br>
       </div>
       <br>
       <a name="r5"></a>[5] &nbsp;Steven W. Smith, Ph.D. The Scientist
 and
 Engineer's Guide to Digital Signal Processing.<br>
       <div style="margin-left: 40px;">California Technical
-Publishing; ISBN 0-9660176-3-3 (1997). <a
- href="http://www.dspguide.com/" target="_top">http://www.dspguide.com/</a><br>
+Publishing; ISBN 0-9660176-3-3 (1997). <a href="http://www.dspguide.com/" target="_top">http://www.dspguide.com/</a><br>
       </div>
       <br>
       <a name="r6"></a>[6] &nbsp;Davide Rocchesso. Introduction to
@@ -376,35 +293,43 @@ FDL. <a href="http://profs.sci.univr.it/%7Erocchess" target="_top">http://profs.
 to
 DSP.<br>
       <div style="margin-left: 40px;">(C) 2004 Bores Signal Processing.
-      <a href="http://www.bores.com/courses/intro/index.htm"
- target="_top">http://www.bores.com/courses/intro/index.htm</a><br>
+      <a href="http://www.bores.com/courses/intro/index.htm" target="_top">http://www.bores.com/courses/intro/index.htm</a><br>
       </div>
       <br>
       <a name="r8"></a>[8] &nbsp;Richard O.Duda. 3-D Audio for HCI.<br>
       <div style="margin-left: 40px;">(C)
-1996-2000 Richard O.Duda. <a href="http://interface.cipic.ucdavis.edu/"
- target="_top">http://interface.cipic.ucdavis.edu/</a><br>
+1996-2000 Richard O.Duda. <a href="http://interface.cipic.ucdavis.edu/" target="_top">http://interface.cipic.ucdavis.edu/</a><br>
       </div>
       <br>
       <a name="r9"></a>[9]&nbsp; HeadRoom. About the HeadRoom
 Crossfeed.<br>
-      <div style="margin-left: 40px;">(C) 1995-2006 HeadRoom. <a
- href="http://www.headphone.com/products/faqs/about-headroom-crossfeed/"
- target="_top">http://www.headphone.com/products/faqs/about-headroom-crossfeed/</a><br>
+      <div style="margin-left: 40px;">(C) 1995-2006 HeadRoom. <a href="http://www.headphone.com/products/faqs/about-headroom-crossfeed/" target="_top">http://www.headphone.com/products/faqs/about-headroom-crossfeed/</a><br>
       </div>
       <br>
       <a name="r10"></a>[10]&nbsp; John Conover. Spatial Distortion
 Reduction Headphone Amplifier.<br>
-      <div style="margin-left: 40px;">(C) 1992-2005 John Conover. <a
- href="http://www.johncon.com/john/SSheadphoneAmp/index.html"
- target="_top">http://www.johncon.com/john/SSheadphoneAmp/index.html</a><br>
+      <div style="margin-left: 40px;">(C) 1992-2005 John Conover. <a href="http://www.johncon.com/john/SSheadphoneAmp/index.html" target="_top">http://www.johncon.com/john/SSheadphoneAmp/index.html</a><br>
       </div>
       <br>
-      <hr style="width: 100%; height: 2px;">Авторское право (c)
-2006&nbsp;
+
+
+      <a name="r11"></a>[11]&nbsp; MultimediaWiki: PCM.<br>
+
+
+      
+      <div style="margin-left: 40px;"><a href="http://wiki.multimedia.cx/index.php?title=PCM" target="_top">http://wiki.multimedia.cx/index.php?title=PCM</a><br>
+      </div>
+
+
+      <br>
+
+
+      
+      
+      <hr style="width: 100%; height: 2px;">
+      <hr style="width: 100%; height: 2px;">Авторское право (c) 2005-2009&nbsp;
 Борис Михайлов &lt; <a href="http://www.tmn.ru/%7Ebor" target="_top">http://www.tmn.ru/~bor</a>&gt;</td>
     </tr>
   </tbody>
 </table>
-</body>
-</html>
+</body></html>

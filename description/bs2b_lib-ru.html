@@ -8,6 +8,7 @@
 
 
 
+
   
   <meta content="Boris Mikhaylov" name="author">
   <meta http-equiv="Content-Type" content="text/html; charset=windows-1251"></head><body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);" alink="#000099" link="#000099" vlink="#990099">
@@ -16,8 +17,11 @@
     <tr>
       <td style="vertical-align: top;"><big><span style="font-weight: bold;">Bauer stereophonic-to-binaural DSP: описание библиотеки.</span></big><br>
       <br>
-Библиотека <a href="http://bs2b.sourceforge.net/" target="_top">bs2b</a> проста в
-использовании. Смотрите таблицу 1 для примера. Это упрощенный код 'bs2bstream.c'. Файлы 'bs2b.h', 'bs2bclass.h' и 'bs2bconvert.c' пакета исходного кода также могут помочь.<br>
+Библиотека <a href="http://bs2b.sourceforge.net/" target="_top">bs2b</a>
+проста в
+использовании. Смотрите таблицу 1 для примера. Это упрощенный код
+'bs2bstream.c'. Файлы 'bs2b.h', 'bs2bclass.h' и 'bs2bconvert.c' пакета
+исходного кода также могут помочь.<br>
 Вы можете использовать 'bs2bstream' вместе с '<a href="http://lame.sourceforge.net/" target="_top">lame</a>' вот такой командной строкой:<br>&nbsp; lame -t --decode test-44-16.wav - | bs2bstream -4 | \<br>&nbsp;&nbsp;&nbsp;&nbsp;
 lame -r -x -m j -s 44.1 --bitwidth 16 --preset extreme - test.mp3<br>или без '-x' перемены местами байтов входного файла, вот такой:<br>&nbsp;&nbsp;
 lame -t --decode test-44-16.wav - | bs2bstream -4 | \<br>&nbsp; &nbsp;&nbsp;
@@ -100,8 +104,7 @@ int main()<br>
       </table>
 
       <br>
-      <hr style="width: 100%; height: 2px;">Авторское право (c)
-2006&nbsp; Борис Михайлов &lt; <a href="http://www.tmn.ru/%7Ebor" target="_top">http://www.tmn.ru/~bor</a>&gt;</td>
+      <hr style="width: 100%; height: 2px;">Авторское право (c) 2005-2009&nbsp; Борис Михайлов &lt; <a href="http://www.tmn.ru/%7Ebor" target="_top">http://www.tmn.ru/~bor</a>&gt;</td>
     </tr>
   </tbody>
 </table>

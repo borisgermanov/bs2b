@@ -1,18 +1,15 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
-<head>
-  <title>Bauer stereophonic-to-binaural DSP</title>
-  <meta content="Boris Mikhaylov" name="author">
-</head>
-<body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);"
- alink="#000099" link="#000099" vlink="#990099">
-<table
- style="width: 700px; text-align: left; font-family: times new roman,times,serif;"
- border="0" cellpadding="2" cellspacing="2">
+<html><head><title>Bauer stereophonic-to-binaural DSP</title>
+
+
+
+
+  
+  <meta content="Boris Mikhaylov" name="author"></head><body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);" alink="#000099" link="#000099" vlink="#990099">
+<table style="width: 700px; text-align: left; font-family: times new roman,times,serif;" border="0" cellpadding="2" cellspacing="2">
   <tbody>
     <tr>
-      <td style="vertical-align: top;"><big><big><span
- style="font-weight: bold;">Bauer stereophonic-to-binaural DSP.</span></big></big><br>
+      <td style="vertical-align: top;"><big><big><span style="font-weight: bold;">Bauer stereophonic-to-binaural DSP.</span></big></big><br>
       <big><span style="font-weight: bold;"><br>
       <a name="Preface"></a>1.
 Preface.</span></big><br>
@@ -24,14 +21,13 @@ for hearing of one channel by both ears. Therefore, you will be tired
 by long time headphone listening more through superstereo effect than
 through
 bad
-headphone design. What&#8217;s missing
+headphone design. What’s missing
 in headphones is the sound going from each channel to the opposite ear,
 arriving a short time later for the extra distance traveled, and with a
 bit of high frequency roll-off for the shadowing effect of the head.
 And the time delay to the far
 ear is somewhat longer at low frequencies than at high frequencies.
-The Bauer stereophonic-to-binaural DSP (<a
- href="http://bs2b.sourceforge.net/" target="_top">bs2b</a>) is
+The Bauer stereophonic-to-binaural DSP (<a href="http://bs2b.sourceforge.net/" target="_top">bs2b</a>) is
 designed to improve headphone listening of stereo audio records. This
 improvement have been described well by electronic circuit designers
 like
@@ -49,8 +45,7 @@ range by
 nonlinear phase response property of these filters. The bs2b makes the
 same job by simple and fast (in comparison with convolution) single
 pole recursive digital filters, because
-these filters has a properties as an electronic RC-filters <a
- href="#r5">[5]</a>, <a href="#r6">[6]</a>, <a href="#r7">[7]</a>.
+these filters has a properties as an electronic RC-filters <a href="#r5">[5]</a>, <a href="#r6">[6]</a>, <a href="#r7">[7]</a>.
 I have
 select a such values of cutoff frequencies of lowpass and
 highboost
@@ -83,8 +78,7 @@ plugins have not satisfy me. The primary degradation of sound by
 headphone
 DSPs is prodiced by a
 comb filter effect due to using of FFT convolution with
-linear phase response for filtering. There is a <a
- href="http://www.stereo-balance.net/" target="_top">HeadPlug</a>
+linear phase response for filtering. There is a <a href="http://www.stereo-balance.net/" target="_top">HeadPlug</a>
 plugin that have
 'decomb' option, and author wrote about it: "The way the plugin does
 this is
@@ -96,8 +90,7 @@ produce any HRTF <a href="#r8">[8]</a> transform in high frequency
 range. Some implementation of HRTF in the high frequency range is
 already have done by
 headphones, except
-of binaural headphones like <a href="http://www.etymotic.com/"
- target="_top">Etymotic</a> ER-4B.<br>
+of binaural headphones like <a href="http://www.etymotic.com/" target="_top">Etymotic</a> ER-4B.<br>
 So, try to use bs2b to feel sound little out from your
 head to lighten the work of&nbsp; your brain.<br>
       <br>
@@ -115,9 +108,7 @@ frequency and time delay
 responses of bs2b by H-transform <a href="bs2b.html#r5">[5]</a>.<br>
       <br>
       <span style="font-weight: bold;">Table 2.1. bs2b-H-transform.pl.</span><br>
-      <table
- style="width: 100%; background-color: rgb(255, 255, 204); text-align: left; font-family: courier new,courier,monospace;"
- border="0" cellpadding="2" cellspacing="2">
+      <table style="width: 100%; background-color: rgb(255, 255, 204); text-align: left; font-family: courier new,courier,monospace;" border="0" cellpadding="2" cellspacing="2">
         <tbody>
           <tr>
             <td style="vertical-align: top;"><font size="-1">#!/usr/bin/perl<br>
@@ -146,12 +137,8 @@ data that below.</font><br>
 -2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </font><font size="-1"># high
 easy crossfeed
 level</font><br>
-            <font size="-1"># perl bs2b-H-transform.pl 500 -9 -1.8</font><font
- size="-1">&nbsp;&nbsp;&nbsp;&nbsp; # middle</font><font size="-1"> easy</font><font
- size="-1"> crossfeed level</font><br>
-            <font size="-1"># perl bs2b-H-transform.pl 360 -10 -1.6</font><font
- size="-1">&nbsp;&nbsp;&nbsp; # low</font><font size="-1"> easy</font><font
- size="-1"> crossfeed level</font><br>
+            <font size="-1"># perl bs2b-H-transform.pl 500 -9 -1.8</font><font size="-1">&nbsp;&nbsp;&nbsp;&nbsp; # middle</font><font size="-1"> easy</font><font size="-1"> crossfeed level</font><br>
+            <font size="-1"># perl bs2b-H-transform.pl 360 -10 -1.6</font><font size="-1">&nbsp;&nbsp;&nbsp; # low</font><font size="-1"> easy</font><font size="-1"> crossfeed level</font><br>
             <font size="-1"><br>
             <br>
 $G&nbsp;&nbsp;&nbsp; = 10 ** ($Gd / 20);<br>
@@ -233,45 +220,20 @@ that can be interpreted as bs2b action to a two channel mono signal.<br>
       <span style="font-weight: bold;">Picture 2.1. bs2b theoretical
 frequency
 response.</span><br>
-      <img alt="bs2b theoretical frequency response"
- src="img/bs2b_h-trans_f.png" style="width: 679px; height: 489px;"><br>
+      <img alt="bs2b theoretical frequency response" src="img/bs2b_h-trans_f.png" style="width: 679px; height: 489px;"><br>
       <br>
 At picture 2.2 a negative value of time presents delay of signal by
 microseconds.<br>
       <br>
       <span style="font-weight: bold;">Picture 2.2. bs2b theoretical
 time delay response.</span><br>
-      <img alt="bs2b theoretical time delay response"
- src="img/bs2b_h-trans_d.png" style="width: 680px; height: 293px;"><br>
+      <img alt="bs2b theoretical time delay response" src="img/bs2b_h-trans_d.png" style="width: 680px; height: 293px;"><br>
       <br>
 This responses looks as a virtual stereo speakers are moved from
 30
 degrees
 azimuth (high crossfeed level) to 60 degrees azimuth (low crossfeed
 level).<br>
-      <br>
-Pictures 2.3 and 2.4 shows a results of above program for new 'Easy'
-crossfeed levels of 2.1 release of bs2b. Only low-easy crossfeed level
-'-L' and high-easy crossfeed level '-H' presets of bs2b are shown.<br>
-      <br>
-      <span style="font-weight: bold;">Picture 2.3. bs2b theoretical
-frequency
-response. 'Easy' version.</span><br>
-      <img alt="bs2b theoretical frequency response. 'Easy' version"
- src="img/bs2b_h_e-trans_f.png" style="width: 679px; height: 489px;"><br>
-      <br>
-The high-easy preset is close to Chu Moy's <a href="bs2b.html#r3">[3]</a>
-version of crossfeeder.<br>
-Picture 2.4 presents delay response of 'Easy' version.<br>
-      <br>
-      <span style="font-weight: bold;">Picture 2.4. bs2b theoretical
-time delay response. 'Easy' version.</span><br>
-      <img alt="bs2b theoretical time delay response. 'Easy' version"
- src="img/bs2b_h_e-trans_d.png" style="width: 680px; height: 293px;"><br>
-      <br>
-This responses looks close to noneasy version because of the same
-set of cutoff frequencies of lowpass filters and little differences of
-highboost filters for both versions.<br>
       <br>
       <big><span style="font-weight: bold;"><a name="Practical_data"></a>3.
 Practical data.<br>
@@ -290,8 +252,7 @@ bs2b are shown. Middle crossfeed level preset is omitted for clearness.<br>
       <br>
       <span style="font-weight: bold;">Picture 3.1. bs2b frequency
 response.</span><br>
-      <img alt="bs2b frequency response" src="img/bs2b_exdata_f.png"
- style="width: 678px; height: 488px;"><br>
+      <img alt="bs2b frequency response" src="img/bs2b_exdata_f.png" style="width: 678px; height: 488px;"><br>
       <br>
 Picture 3.2 shows the difference between
 frequency analysis of real audio
@@ -301,33 +262,7 @@ frequency analysis of that program has been processed by bs2b.<br>
       <span style="font-weight: bold;">Picture 3.2. J.S. Bach
 "BWV1066"
 "Overture" frequency analysis difference.</span><br>
-      <img
- alt="J.S. Bach &quot;BWV1066&quot; &quot;Overture&quot; frequency analysis difference"
- src="img/Bach-BWV1066-Overture-diff.png"
- style="width: 681px; height: 294px;"><br>
-      <br>
-Picture 3.3 shows the practical frequency responses of 'Easy High'
-preset of
-bs2b.<br>
-      <br>
-      <span style="font-weight: bold;">Picture 3.3. bs2b frequency
-response</span><span style="font-weight: bold;">. 'Easy' version</span><span
- style="font-weight: bold;">.</span><br>
-      <img alt="bs2b frequency response. 'Easy' version"
- src="img/bs2b_e_exdata_f.png" style="width: 678px; height: 488px;"><br>
-      <br>
-Picture 3.4 is like picture 3.2 but for 'Easy High' ('-H') and 'Easy
-Low' ('-L') presets.<br>
-      <br>
-      <span style="font-weight: bold;">Picture 3.4. J.S. Bach
-"BWV1066"
-"Overture" frequency analysis difference</span><span
- style="font-weight: bold;">. 'Easy' version</span><span
- style="font-weight: bold;">.</span><br>
-      <img
- alt="J.S. Bach &quot;BWV1066&quot; &quot;Overture&quot; frequency analysis difference. 'Easy' version"
- src="img/Bach-BWV1066-Overture-diff_e.png"
- style="width: 681px; height: 294px;"><br>
+      <img alt="J.S. Bach &quot;BWV1066&quot; &quot;Overture&quot; frequency analysis difference" src="img/Bach-BWV1066-Overture-diff.png" style="width: 681px; height: 294px;"><br>
       <br>
       <br>
       <big><span style="font-weight: bold;"><a name="References"></a>4.
@@ -338,35 +273,29 @@ Earphones
 and
 Binaural Loudspeakers.<br>
       <div style="margin-left: 40px;">JAES Volume 9
-Number 2 pp. 148-151; April 1961. <a href="http://www.aes.org/"
- target="_top">http://www.aes.org/</a><br>
+Number 2 pp. 148-151; April 1961. <a href="http://www.aes.org/" target="_top">http://www.aes.org/</a><br>
       </div>
       <br>
       <a name="r2"></a>[2] &nbsp;Siegfried Linkwitz. Improved Headphone
 Listening. Build a stereo-crossfeed circuit.<br>
-      <div style="margin-left: 40px;">Audio; December 1971. <a
- href="http://www.linkwitzlab.com/" target="_top">http://www.linkwitzlab.com/</a><br>
+      <div style="margin-left: 40px;">Audio; December 1971. <a href="http://www.linkwitzlab.com/" target="_top">http://www.linkwitzlab.com/</a><br>
       </div>
       <br>
       <a name="r3"></a>[3] &nbsp;Chu Moy. An Acoustic Simulator for
 Headphone
 Amplifiers.<br>
-      <div style="margin-left: 40px;">(C) 1998-2001 Chu Moy. <a
- href="http://headwize.com/projects/showfile.php?file=cmoy1_prj.htm"
- target="_top">http://headwize.com/projects/showfile.php?file=cmoy1_prj.htm</a><br>
+      <div style="margin-left: 40px;">(C) 1998-2001 Chu Moy. <a href="http://headwize.com/projects/showfile.php?file=cmoy1_prj.htm" target="_top">http://headwize.com/projects/showfile.php?file=cmoy1_prj.htm</a><br>
       </div>
       <br>
       <a name="r4"></a>[4] &nbsp;Jan Meier. A DIY Headphone Amplifier.<br>
-      <div style="margin-left: 40px;"><a
- href="http://www.meier-audio.de/" target="_top">http://www.meier-audio.de/</a>, <a href="http://bs2b.sourceforge.net/ARIETTA/index.html">CORDA ARIETTA</a><br>
+      <div style="margin-left: 40px;"><a href="http://www.meier-audio.de/" target="_top">http://www.meier-audio.de/</a>, <a href="http://bs2b.sourceforge.net/ARIETTA/index.html">CORDA ARIETTA</a><br>
       </div>
       <br>
       <a name="r5"></a>[5] &nbsp;Steven W. Smith, Ph.D. The Scientist
 and
 Engineer's Guide to Digital Signal Processing.<br>
       <div style="margin-left: 40px;">California Technical
-Publishing; ISBN 0-9660176-3-3 (1997). <a
- href="http://www.dspguide.com/" target="_top">http://www.dspguide.com/</a><br>
+Publishing; ISBN 0-9660176-3-3 (1997). <a href="http://www.dspguide.com/" target="_top">http://www.dspguide.com/</a><br>
       </div>
       <br>
       <a name="r6"></a>[6] &nbsp;Davide Rocchesso. Introduction to
@@ -380,34 +309,37 @@ FDL. <a href="http://profs.sci.univr.it/%7Erocchess" target="_top">http://profs.
 to
 DSP.<br>
       <div style="margin-left: 40px;">(C) 2004 Bores Signal Processing.
-      <a href="http://www.bores.com/courses/intro/index.htm"
- target="_top">http://www.bores.com/courses/intro/index.htm</a><br>
+      <a href="http://www.bores.com/courses/intro/index.htm" target="_top">http://www.bores.com/courses/intro/index.htm</a><br>
       </div>
       <br>
       <a name="r8"></a>[8] &nbsp;Richard O.Duda. 3-D Audio for HCI.<br>
       <div style="margin-left: 40px;">(C)
-1996-2000 Richard O.Duda. <a href="http://interface.cipic.ucdavis.edu/"
- target="_top">http://interface.cipic.ucdavis.edu/</a><br>
+1996-2000 Richard O.Duda. <a href="http://interface.cipic.ucdavis.edu/" target="_top">http://interface.cipic.ucdavis.edu/</a><br>
       </div>
       <br>
       <a name="r9"></a>[9]&nbsp; HeadRoom. About the HeadRoom
 Crossfeed.<br>
-      <div style="margin-left: 40px;">(C) 1995-2006 HeadRoom. <a
- href="http://www.headphone.com/products/faqs/about-headroom-crossfeed/"
- target="_top">http://www.headphone.com/products/faqs/about-headroom-crossfeed/</a><br>
+      <div style="margin-left: 40px;">(C) 1995-2006 HeadRoom. <a href="http://www.headphone.com/products/faqs/about-headroom-crossfeed/" target="_top">http://www.headphone.com/products/faqs/about-headroom-crossfeed/</a><br>
       </div>
       <br>
       <a name="r10"></a>[10]&nbsp; John Conover. Spatial Distortion
 Reduction Headphone Amplifier.<br>
-      <div style="margin-left: 40px;">(C) 1992-2005 John Conover. <a
- href="http://www.johncon.com/john/SSheadphoneAmp/index.html"
- target="_top">http://www.johncon.com/john/SSheadphoneAmp/index.html</a><br>
+      <div style="margin-left: 40px;">(C) 1992-2005 John Conover. <a href="http://www.johncon.com/john/SSheadphoneAmp/index.html" target="_top">http://www.johncon.com/john/SSheadphoneAmp/index.html</a><br>
       </div>
       <br>
-      <hr style="width: 100%; height: 2px;">Copyright (c) 2006&nbsp;
+
+      <a name="r11"></a>[11]&nbsp; MultimediaWiki: PCM.<br>
+
+      
+      <div style="margin-left: 40px;"><a href="http://wiki.multimedia.cx/index.php?title=PCM" target="_top">http://wiki.multimedia.cx/index.php?title=PCM</a><br>
+      </div>
+
+      <br>
+
+      
+      <hr style="width: 100%; height: 2px;">Copyright (c) 2005-2009&nbsp;
 Boris Mikhaylov &lt; <a href="http://www.tmn.ru/%7Ebor" target="_top">http://www.tmn.ru/~bor</a>&gt;</td>
     </tr>
   </tbody>
 </table>
-</body>
-</html>
+</body></html>
