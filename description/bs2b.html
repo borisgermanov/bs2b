@@ -4,6 +4,10 @@
 
 
 
+
+
+
+
   
   <meta content="Boris Mikhaylov" name="author"></head><body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);" alink="#000099" link="#000099" vlink="#990099">
 <table style="width: 800px; text-align: left; font-family: times new roman,times,serif;" border="0" cellpadding="2" cellspacing="2">
@@ -13,15 +17,12 @@
       <big><span style="font-weight: bold;"><br>
       <a name="Preface"></a>1.
 Preface.</span></big><br>
-      <br>
-A regular stereo record is produced for listening by loudspeakers. This
+      <br>Typical stereo recordings are being made to listen to the speakers. This
 means
-that sound engineer makes stereo mixing with interpretation of sound
-for hearing of one channel by both ears. Therefore, you will be tired
-by long time headphone listening more through superstereo effect than
-through
-bad
-headphone design. What’s missing
+that a sound engineer makes the stereo mix to the adaptation of sound
+for listen of one channel by both ears. Therefore, you will be tired
+during long time headphone listening more because superstereo effect than
+because of poor designed headphones. What’s missing
 in headphones is the sound going from each channel to the opposite ear,
 arriving a short time later for the extra distance traveled, and with a
 bit of high frequency roll-off for the shadowing effect of the head.
@@ -29,83 +30,74 @@ And the time delay to the far
 ear is somewhat longer at low frequencies than at high frequencies.
 The Bauer stereophonic-to-binaural DSP (<a href="http://bs2b.sourceforge.net/" target="_top">bs2b</a>) is
 designed to improve headphone listening of stereo audio records. This
-improvement have been described well by electronic circuit designers
+improvement have been well described by electronic circuit designers
 like
 Benjamin Bauer <a href="#r1">[1]</a>, Siegfried Linkwitz <a href="#r2">[2]</a>,
 Chu Moy <a href="#r3">[3]</a>, Jan Meier <a href="#r4">[4]</a>, John
 Conover <a href="#r10">[10]</a>,
 HeadRoom <a href="#r9">[9]</a>.
 The time delay at low frequency range, lowpass filters, highboost
-filters and crossfeeding of their circuits has been made by first order
+filters and crossfeeding of their electronic circuits has been made by
+first order
 RL
 (Bauer) or RC
-(Linkwitz, Moy, Meier) analog filters. This design makes desired
-effects and naturally eliminates comb filter effect at high frequency
-range by
-nonlinear phase response property of these filters. The bs2b makes the
-same job by simple and fast (in comparison with convolution) single
+(Linkwitz, Moy, Meier) analog filters. This design makes the desired
+effects and naturally excludes the effect of comb filter in the upper
+range of frequencies through the nonlinear property&nbsp; of
+phase-frequency response of these filters. bs2b doing the same work
+through the simple and fast (in comparison with convolution) single
 pole recursive digital filters, because
-these filters has a properties as an electronic RC-filters <a href="#r5">[5]</a>, <a href="#r6">[6]</a>, <a href="#r7">[7]</a>.
+these filters have the same properties as an electronic RC-filters <a href="#r5">[5]</a>, <a href="#r6">[6]</a>, <a href="#r7">[7]</a>.
 I have
 select a such values of cutoff frequencies of lowpass and
 highboost
-filters that allow to get a desired time delay and
+filters that allows to provide the desired time delay and
 most smooth resulting frequency
-response. Unfortunately, I did not calculate the real value
-of
-cutoff
-frequency of highboost filter, but it is not so important. A highboost
-digital filter can be presented as two-step filter: as a
+response. Unfortunately, I have not calculated the actual value
+of the
+frequency
+cutoff of highboost filter, but it is not so important. A highboost
+digital filter can be represented as a two-step filter: as the
 subtraction of attenuated lowpass filtered signal from original signal.
 This
-can be mathematically presented to the one-step recursive filter. In
-the first (1.0.0) release of bs2b I
-was apply a two-step method for highboost filter with using of already
-calculated lowpas filtered signal, but it
-makes the value of cutoff frequency of highboost filter little
-lower than I was
-assume, and it leads to a thickness in the lower midrange.
-Nevertheless, as Chu Moy wrote <a href="#r3">[3]</a>, the
-value of highboost filter cutoff frequency
-should be little
-higher then lowpass filter one for
-more smooth frequency
-response of crossfeeder. Therefore, I have made an one-step
-method for highboost
-filter in second release of bs2b. I was started this project
-because the sound of other, I have see before, audioplayer's headphone
-plugins have not satisfy me. The primary degradation of sound by
-headphone
-DSPs is prodiced by a
-comb filter effect due to using of FFT convolution with
-linear phase response for filtering. There is a <a href="http://www.stereo-balance.net/" target="_top">HeadPlug</a>
-plugin that have
-'decomb' option, and author wrote about it: "The way the plugin does
+can be mathematically described by one-step recursive filter. In
+the first (1.0.0) release of bs2b I applied a two-step method for highboost filter with using of already
+calculated lowpas filtered signal, but this is done the value of frequency cutoff of highboost filter a little
+less than I expected, and this led to the thickness of low-medium frequency range.
+Nevertheless, as written by Chu Moy <a href="#r3">[3]</a>,
+the frequency cutoff of highboost filter should be a bit
+higher than this value for the lowpass filter to achieve a smooth
+frequency
+response of crossfeeder. Therefore, I made a one-step highboost
+filter for the second release of bs2b. I started this project
+because the sound of other audioplayer's headphone
+plugins, that I heard before, did not satisfy me. Major deterioration
+of the sound produced by comb filter effect due to the use of FFT
+convolution with a linear phase frequency response. There is a <a href="http://www.stereo-balance.net/" target="_top">HeadPlug</a>
+plugin which have
+the option 'decomb', and the author writes about this: "The way the
+plugin does
 this is
 really damn-ass straight-forward from a technical point of view". I
-have
-try to make it much easier for CPU. Last
-note. The bs2b don't produce simulation of any ambient and don't
-produce any HRTF <a href="#r8">[8]</a> transform in high frequency
-range. Some implementation of HRTF in the high frequency range is
-already have done by
-headphones, except
-of binaural headphones like <a href="http://www.etymotic.com/" target="_top">Etymotic</a> ER-4B.<br>
+have tried to make it much easier for the CPU. Last comment. The bs2b
+does not produce any simulation of ambient, and does not produce any
+HRTF <a href="#r8">[8]</a> transform in a high frequency
+range. Some implementations of the HRTF in a high frequency range are produced by good headphones, except
+of case of binaural headphones like <a href="http://www.etymotic.com/" target="_top">Etymotic</a> ER-4B.<br>
 So, try to use bs2b to feel sound little out from your
 head to lighten the work of&nbsp; your brain.<br>
       <br>
       <big><span style="font-weight: bold;"><a name="Theoretical_issue"></a>2.
-Theoretical issue.</span></big><br>
-      <br>
-Single
-pole recursive filter is
+Theory.</span></big><br>
+      <br>A single
+pole recursive filter are
 presented by recursion eqation:<br>
 O[n] = a0 * I[n] + a1 * I[n-1] + b1 * O[n-1]<br>
-where a0, a1, b1 are recursion coefficients, I[n] is an input samples,
+where a0, a1, b1 is a recursion coefficients, I[n] is an input samples,
 O[n] is an output (filtered) samples. Filter's response is relay to
-recursion coefficients. Table 2.1 shows a perl program that calculate
-frequency and time delay
-responses of bs2b by H-transform <a href="bs2b.html#r5">[5]</a>.<br>
+recursion coefficients. The table 2.1 shows a perl program that calculates the
+frequency and a time delay
+responses of the bs2b by using an H-transform <a href="bs2b.html#r5">[5]</a>.<br>
       <br>
       <span style="font-weight: bold;">Table 2.1. bs2b-H-transform.pl.</span><br>
       <table style="width: 100%; background-color: rgb(255, 255, 204); text-align: left; font-family: courier new,courier,monospace;" border="0" cellpadding="2" cellspacing="2">
@@ -122,24 +114,9 @@ $Gd&nbsp;&nbsp; = shift; # Lowpass filter gain (dB)<br>
 $Ad_h = shift; # Highboost filter gain (dB) (0dB is highs)<br>
             <br>
 # example:<br>
-# perl bs2b-H-transform.pl 700 -8 -2<br>
-# it makes -6 dB crossfeed level<br>
-#<br>
-# bs2b 2.0.0b uses data listed below.<br>
-# perl bs2b-H-transform.pl 700 -5.5&nbsp; -2.5&nbsp; # high crossfeed
-level<br>
-# perl bs2b-H-transform.pl 500 -6.75 -2.25 # middle crossfeed level<br>
-# perl bs2b-H-transform.pl 360 -8&nbsp;&nbsp;&nbsp;
--2&nbsp;&nbsp;&nbsp; # low crossfeed level<br>
-            </font><font size="-1"># bs2b 2.1.0 uses additional 'Easy'
-data that below.</font><br>
-            <font size="-1"># perl bs2b-H-transform.pl 700 -8
--2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </font><font size="-1"># high
-easy crossfeed
-level</font><br>
-            <font size="-1"># perl bs2b-H-transform.pl 500 -9 -1.8</font><font size="-1">&nbsp;&nbsp;&nbsp;&nbsp; # middle</font><font size="-1"> easy</font><font size="-1"> crossfeed level</font><br>
-            <font size="-1"># perl bs2b-H-transform.pl 360 -10 -1.6</font><font size="-1">&nbsp;&nbsp;&nbsp; # low</font><font size="-1"> easy</font><font size="-1"> crossfeed level</font><br>
-            <font size="-1"><br>
+# perl bs2b-H-transform.pl 700 -6.75&nbsp;&nbsp; -2.25&nbsp; # Default preset&nbsp;&nbsp;&nbsp;&nbsp; (700Hz, 4.5dB)<br>
+# perl bs2b-H-transform.pl 700 -8.00&nbsp;&nbsp; -2.00&nbsp; # Chu Moy's preset&nbsp;&nbsp; (700Hz, 6.0dB)<br>
+# perl bs2b-H-transform.pl 650 -10.917 -1.417 # Jan Meier's preset (650Hz, 9.5dB)</font><font size="-1"><br>
             <br>
 $G&nbsp;&nbsp;&nbsp; = 10 ** ($Gd / 20);<br>
 $A_h&nbsp; = 10 ** ($Ad_h / 20);<br>
@@ -210,35 +187,35 @@ pi,&nbsp; # degree<br>
         </tbody>
       </table>
       <br>
-Pictures 2.1 and 2.2 shows a results of above program. In other words,
-there is a theoretical responses of bs2b DSP. Only low crossfeed level
-'-L' and high crossfeed level '-H' presets of bs2b are shown. Middle
-crossfeed level preset is omitted for clearness. 'HB' is highboost
-filter. 'LP' is lowpass filter. 'M' is a sum of these filtered signals,
-that can be interpreted as bs2b action to a two channel mono signal.<br>
+Figures 2.1 and 2.2 shows the results of the above program. In other
+words, it is a theoretical responses of bs2b DSP. 'Sum' is the sum of
+the signals after the lowpass and highboost filters,
+which can be interpreted as a bs2b action to the two channel mono
+signal.<br>
       <br>
-      <span style="font-weight: bold;">Picture 2.1. bs2b theoretical
+      <span style="font-weight: bold;">Figure 2.1. bs2b theoretical
 frequency
 response.</span><br>
       <img alt="bs2b theoretical frequency response" src="img/bs2b_h-trans_f.png" style="width: 755px; height: 630px;"><br>
-      <br>
-At picture 2.2 a negative value of time presents delay of signal by
+      <br>On the figure 2.2 a negative value of time represents a delay of signal by
 microseconds.<br>
       <br>
-      <span style="font-weight: bold;">Picture 2.2. bs2b theoretical
+      <span style="font-weight: bold;">Figure 2.2. bs2b theoretical
 time delay response.</span><br>
       <img alt="bs2b theoretical time delay response" src="img/bs2b_h-trans_d.png" style="width: 755px; height: 359px;"><br>
-      <br>
-This responses looks as a virtual stereo speakers are moved from
-30
-degrees
-azimuth (high crossfeed level) to 60 degrees azimuth (low crossfeed
-level).<br>
+      <br>Above shows the three versions with different sets of cut-off frequency and crossfeed level:<br>
+1) 700 Hz, 4.5 dB - default - this setting is closest to the virtual
+speaker placement with azimuth 30 degrees and the removal of about 3
+meters, while listening by headphones.<br>
+2) 700 Hz, 6 dB - most popular - this setting is close to the parameters of a Chu Moy's <a href="bs2b.html#r3">[3]</a> crossfeeder.<br>
+3) 650 Hz, 9.5 dB - making the smallest changes in the original signal
+only for relaxing listening by headphones - this setting is close to
+the parameters of a crossfeeder implemented in Jan Meier's <a href="bs2b.html#r4">[4]</a> CORDA amplifiers.<br>
       <br>
       <big><span style="font-weight: bold;"><a name="Practical_data"></a>3.
 Practical data.<br>
       </span></big><br>
-Picture 3.1 shows the practical frequency responses of
+Figure 3.1 shows the practical frequency responses of
 bs2b. This is a frequency analysis of applied to
 bs2b white noise signals. There
 are two channel mono signal 'M', two channel independ signal 'I' and
@@ -250,18 +227,18 @@ crossfeed
 level '-L' and high crossfeed level '-H' presets of
 bs2b are shown. Middle crossfeed level preset is omitted for clearness.<br>
       <br>
-      <span style="font-weight: bold;">Picture 3.1. bs2b frequency
+      <span style="font-weight: bold;">Figure 3.1. bs2b frequency
 response.</span><br>
       <img alt="bs2b frequency response" src="img/bs2b_exdata_f.png" style="width: 755px; height: 630px;"><br>
       <br>
-Picture 3.2 shows the difference between
+Figure 3.2 shows the difference between
 frequency analysis of real audio
 program and
 frequency analysis of that program has been processed by bs2b.<br>
       <br>
-      <span style="font-weight: bold;">Picture 3.2. J.S. Bach
+      <span style="font-weight: bold;">Figure 3.2. J.S. Bach
 "BWV1066"
-"Overture" frequency analysis difference.</span><br>
+"Overture" frequency analysis.</span><br>
       <img alt="J.S. Bach &quot;BWV1066&quot; &quot;Overture&quot; frequency analysis difference" src="img/Bach-BWV1066-Overture-diff.png" style="width: 755px; height: 630px;"><br>
       <br>
       <br>
