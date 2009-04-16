@@ -9,6 +9,7 @@
 
 
 
+
   
   <meta content="Boris Mikhaylov" name="author">
   <meta http-equiv="Content-Type" content="text/html; charset=windows-1251"></head><body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);" alink="#000099" link="#000099" vlink="#990099">
@@ -19,18 +20,18 @@
       <br>
 Библиотека <a href="http://bs2b.sourceforge.net/" target="_top">bs2b</a>
 проста в
-использовании. Смотрите таблицу 1 для примера. Это упрощенный код
-'bs2bstream.c'. Файлы 'bs2b.h', 'bs2bclass.h' и 'bs2bconvert.c' пакета
+использовании. Смотрите таблицы 1 и 2 для примера. Это упрощенный код
+'bs2bstream.c'. Файлы 'bs2b.h' и 'bs2bclass.h' пакета
 исходного кода также могут помочь.<br>
-Вы можете использовать 'bs2bstream' вместе с '<a href="http://lame.sourceforge.net/" target="_top">lame</a>' вот такой командной строкой:<br>&nbsp; lame -t --decode test-44-16.wav - | bs2bstream -4 | \<br>&nbsp;&nbsp;&nbsp;&nbsp;
+Вы можете использовать 'bs2bstream' вместе с '<a href="http://lame.sourceforge.net/" target="_top">lame</a>' вот такой командной строкой:<br>&nbsp; lame -t --decode test-44-16.wav - | bs2bstream -l d -b 16 -r 44.1 | \<br>&nbsp;&nbsp;&nbsp;&nbsp;
 lame -r -x -m j -s 44.1 --bitwidth 16 --preset extreme - test.mp3<br>или без '-x' перемены местами байтов входного файла, вот такой:<br>&nbsp;&nbsp;
-lame -t --decode test-44-16.wav - | bs2bstream -4 | \<br>&nbsp; &nbsp;&nbsp;
+lame -t --decode test-44-16.wav - | bs2bstream -l d -b 16 -r 44.1 | \<br>&nbsp; &nbsp;&nbsp;
 lame -r -m j -s 44.1 --bitwidth 16 --preset extreme - test.mp3<br><br>
-      <span style="font-weight: bold;">Таблица 1. Пример использования библиотеки bs2b.</span><br>
+      <span style="font-weight: bold;">Таблица 1. Пример использования библиотеки bs2b (C).</span><br>
       <table style="width: 100%; background-color: rgb(255, 255, 204); text-align: left; font-family: courier new,courier,monospace;" border="0" cellpadding="2" cellspacing="2">
         <tbody>
           <tr>
-            <td style="vertical-align: top;"><font size="-1"></font><font size="-1">#include &lt;stdio.h&gt;<br>#include "bs2b.h"<br>
+            <td style="vertical-align: top;"><font size="-1">#include &lt;stdio.h&gt;<br>#include "bs2b.h"<br>
             <br>
 int main()<br>
 {<br>
@@ -40,8 +41,14 @@ int main()<br>
 &nbsp; bs2bdp = bs2b_open();<br>
             <br>
 &nbsp; /* Default init value<br>
-&nbsp; bs2b_set_srate( bs2bdp, 44100L );<br>
-&nbsp; bs2b_set_level( bs2bdp, BS2B_DEFAULT_CLEVEL );<br>
+&nbsp; bs2b_set_srate( bs2bdp, 44100 );<br>
+&nbsp; bs2b_set_level( bs2bdp, BS2B_DEFAULT_CLEVEL ); // 700 Hz, 4.5 dB<br>
+&nbsp; // or another way<br></font><font size="-1">
+&nbsp; bs2b_set_srate( bs2bdp, 44100 );<br>
+&nbsp; bs2b_set_level_fcut( bs2bdp, 700 ); // 700 Hz<br>
+            </font><font size="-1">
+&nbsp; bs2b_set_level_feed( bs2bdp, 45 );&nbsp; // 4.5 dB<br>
+            </font><font size="-1">
 &nbsp; */<br>
             <br>&nbsp; /* 16 bit raw PCM */<br>
 &nbsp; while( 2 == fread( sample, sizeof( short ), 2, stdin ) )<br>
@@ -62,14 +69,14 @@ int main()<br>
       <br>
 
 Значение частоты дискретизации по умолчанию равно 44100 Гц. Значение
-уровня взаимосмешения по умолчанию есть 'High Easy' (6). Если частота
+уровня взаимосмешения по умолчанию есть 700 Гц, 4.5 дБ. Если частота
 дискретизации
 аудио данных другая или вы хотите изменить уровень взаимосмешения то вы
 должны вызвать функции 'bs2b_set_srate' и
-'bs2b_set_level' соответственно.<br>
+'bs2b_set_level' (или 'bs2b_set_srate', 'bs2b_set_level_fcut', 'bs2b_set_level_feed') соответственно.<br>
       <br>
 
-      <span style="font-weight: bold;">Таблица 2. Пример использования библиотеки bs2b в C++.</span><br>
+      <span style="font-weight: bold;">Таблица 2. Пример использования библиотеки bs2b (C++).</span><br>
 
       
       <table style="width: 100%; background-color: rgb(255, 255, 204); text-align: left; font-family: courier new,courier,monospace;" border="0" cellpadding="2" cellspacing="2">
@@ -85,9 +92,15 @@ int main()<br>
 &nbsp; // </font><font size="-1">Default init value</font><br>
 
             <font size="-1">
-&nbsp; //bs2b.set_srate( 44100L );<br>
-&nbsp; //bs2b.set_level( BS2B_DEFAULT_CLEVEL );<br>
-            <br>&nbsp; short sample[ 2 ]; // </font><font size="-1">16 bit raw PCM</font><br>
+&nbsp; //bs2b.set_srate( 44100 );<br>
+&nbsp; //bs2b.set_level( BS2B_DEFAULT_CLEVEL );</font><font size="-1"> // 700 Hz, 4.5 dB</font><br>
+            <font size="-1">&nbsp; // or another way<br></font><font size="-1">
+&nbsp; //bs2b.set_srate( 44100 );<br>
+&nbsp; //bs2b.set_level_fcut( 700 ); // 700 Hz<br>
+            </font><font size="-1">
+&nbsp; //bs2b.set_level_feed( 45 );&nbsp; // 4.5 dB<br>
+            </font><font size="-1"></font><br>
+            <font size="-1">&nbsp; short sample[ 2 ]; // </font><font size="-1">16 bit raw PCM</font><br>
 
             <font size="-1">&nbsp; while( 2 == fread( sample, sizeof( short ), 2, stdin ) )<br>
 &nbsp; {<br>
