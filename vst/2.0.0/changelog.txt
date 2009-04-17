@@ -1,0 +1,23 @@
+2009-04-17 Boris Mikhaylov <http://www.tmn.ru/~bor>
+
+	2.0.0
+
+	* libbs2b 3.0.0 with much more settings are used.
+
+2009-02-02 Boris Mikhaylov <http://www.tmn.ru/~bor>
+
+	1.2.0
+
+	* bs2b-2.2.0 with dynamic variables for multiply instances are used.
+	* Compiled by MS VC++ 2008.
+	* Nothing changed for a sound.
+
+2008-02-08 Boris Mikhaylov <http://www.tmn.ru/~bor>
+
+	1.1.0
+
+	* Edit functionality by VSTGUI released.
+
+2007-10-09 Boris Mikhaylov <http://www.tmn.ru/~bor>
+
+	1.0.0 - first release.
