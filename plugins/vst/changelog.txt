@@ -1,3 +1,9 @@
+2009-04-17 Boris Mikhaylov <http://www.tmn.ru/~bor>
+
+	2.0.0
+
+	* libbs2b 3.0.0 with much more settings are used.
+
 2009-02-02 Boris Mikhaylov <http://www.tmn.ru/~bor>
 
 	1.2.0

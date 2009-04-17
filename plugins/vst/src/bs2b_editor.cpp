@@ -39,7 +39,7 @@ enum
 	kFaderInc = 50,
 
 	kDisplayX = 10,
-	kDisplayY = 15,
+	kDisplayY = 52,
 	kDisplayXWidth = 90,
 	kDisplayHeight = 14
 };
@@ -48,7 +48,6 @@ void feed_StringConvert( float value, char *string )
 {
 	int feed =
 		( int )( value * ( BS2B_MAXFEED - BS2B_MINFEED ) ) + BS2B_MINFEED;
-
 	sprintf( string, "%d.%d dB", feed / 10, feed % 10 );
 }
 
@@ -56,8 +55,13 @@ void fcut_StringConvert( float value, char *string )
 {
 	int fcut =
 		( int )( value * ( BS2B_MAXFCUT - BS2B_MINFCUT ) ) + BS2B_MINFCUT;
-
 	sprintf( string, "%d Hz, %d us", fcut, bs2b_level_delay( fcut ) );
+}
+
+void defs_StringConvert( float value, char *string )
+{
+	int defs = ( int )( value * PARAM_LEVEL_DEF__MAX - 0.01f );
+	sprintf( string, level_def_name[ defs ] );
 }
 
 bs2b_editor::bs2b_editor( AudioEffect *effect )
@@ -116,13 +120,22 @@ bool bs2b_editor::open( void *ptr )
 	fcut_fader->setValue( effect->getParameter( PARAM_LEVEL_FCUT ) );
 	lFrame->addView( fcut_fader );
 
+	// Defaults slider
+	size.offset( 0, kFaderInc + hFaderBody->getHeight() );
+	defs_fader = new CHorizontalSlider( size, this,
+		PARAM_LEVEL_DEFS, minPos, maxPos, hFaderHandle, hFaderBody, point, kLeft );
+	defs_fader->setOffsetHandle( offset );
+	defs_fader->setValue( effect->getParameter( PARAM_LEVEL_DEFS ) );
+	lFrame->addView( defs_fader );
+
 	// Feed level display
 	size( kDisplayX, kDisplayY,
 		kDisplayX + kDisplayXWidth, kDisplayY + kDisplayHeight );
-	feed_display = new CParamDisplay( size, 0, kCenterText );
+	feed_display = new CParamDisplay( size, 0, kLeftText );
+	feed_display->setHoriAlign( kLeftText );
 	feed_display->setFont( kNormalFontSmall );
-	feed_display->setFontColor( kWhiteCColor );
-	feed_display->setBackColor( kBlackCColor );
+	feed_display->setFontColor( kBlackCColor );
+	feed_display->setBackColor( kGreyCColor );
 	feed_display->setFrameColor( kGreyCColor );
 	feed_display->setValue( effect->getParameter( PARAM_LEVEL_FEED ) );
 	feed_display->setStringConvert( feed_StringConvert );
@@ -130,14 +143,27 @@ bool bs2b_editor::open( void *ptr )
 
 	// Cut frequency display
 	size.offset( 0, kFaderInc + hFaderBody->getHeight() );
-	fcut_display = new CParamDisplay( size, 0, kCenterText );
+	fcut_display = new CParamDisplay( size, 0, kLeftText );
+	fcut_display->setHoriAlign( kLeftText );
 	fcut_display->setFont( kNormalFontSmall );
-	fcut_display->setFontColor( kWhiteCColor );
-	fcut_display->setBackColor( kBlackCColor );
+	fcut_display->setFontColor( kBlackCColor );
+	fcut_display->setBackColor( kGreyCColor );
 	fcut_display->setFrameColor( kGreyCColor );
 	fcut_display->setValue( effect->getParameter( PARAM_LEVEL_FCUT ) );
 	fcut_display->setStringConvert( fcut_StringConvert );
 	lFrame->addView( fcut_display );
+
+	// Defaults display
+	size.offset( 0, kFaderInc + hFaderBody->getHeight() );
+	defs_display = new CParamDisplay( size, 0, kLeftText );
+	defs_display->setHoriAlign( kLeftText );
+	defs_display->setFont( kNormalFontSmall );
+	defs_display->setFontColor( kBlackCColor );
+	defs_display->setBackColor( kGreyCColor );
+	defs_display->setFrameColor( kGreyCColor );
+	defs_display->setValue( effect->getParameter( PARAM_LEVEL_DEFS ) );
+	defs_display->setStringConvert( defs_StringConvert );
+	lFrame->addView( defs_display );
 
 	hFaderBody->forget();
 	hFaderHandle->forget();
@@ -157,22 +183,20 @@ void bs2b_editor::setParameter( VstInt32 index, float value )
 {
 	if( frame == 0 ) return;
 
-	switch( index )
-	{
-	case PARAM_LEVEL_FEED:
-		if( feed_fader )
-			feed_fader->setValue( effect->getParameter( index ) );
-		if( feed_display )
-			feed_display->setValue( effect->getParameter( index ) );
-		break;
+	if( feed_fader )
+		feed_fader->setValue( effect->getParameter( PARAM_LEVEL_FEED ) );
+	if( feed_display )
+		feed_display->setValue( effect->getParameter( PARAM_LEVEL_FEED ) );
 
-	case PARAM_LEVEL_FCUT:
-		if( fcut_fader )
-			fcut_fader->setValue( effect->getParameter( index ) );
-		if( fcut_display )
-			fcut_display->setValue( effect->getParameter( index ) );
-		break;
-	}
+	if( fcut_fader )
+		fcut_fader->setValue( effect->getParameter( PARAM_LEVEL_FCUT ) );
+	if( fcut_display )
+		fcut_display->setValue( effect->getParameter( PARAM_LEVEL_FCUT ) );
+
+	if( defs_fader )
+		defs_fader->setValue( effect->getParameter( PARAM_LEVEL_DEFS ) );
+	if( defs_display )
+		defs_display->setValue( effect->getParameter( PARAM_LEVEL_DEFS ) );
 }
 
 void bs2b_editor::valueChanged( CDrawContext *context, CControl *control )
@@ -182,6 +206,7 @@ void bs2b_editor::valueChanged( CDrawContext *context, CControl *control )
 	{
 	case PARAM_LEVEL_FEED:
 	case PARAM_LEVEL_FCUT:
+	case PARAM_LEVEL_DEFS:
 		effect->setParameterAutomated( tag, control->getValue() );
 		control->setDirty();
 		break;

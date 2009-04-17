@@ -42,9 +42,11 @@ public:
 private:
 	CHorizontalSlider *feed_fader;
 	CHorizontalSlider *fcut_fader;
+	CHorizontalSlider *defs_fader;
 
 	CParamDisplay *feed_display;
 	CParamDisplay *fcut_display;
+	CParamDisplay *defs_display;
 
 	CBitmap *hBackground;
 };

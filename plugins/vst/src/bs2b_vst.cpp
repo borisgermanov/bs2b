@@ -44,8 +44,7 @@ bs2b_effect::bs2b_effect( audioMasterCallback audioMaster )
 	vst_strncpy( m_programName, "Default", kVstMaxProgNameLen );
 
 	// EDITOR
-	//editor = new bs2b_editor( this );
-	editor = 0;
+	editor = new bs2b_editor( this );
 }
 
 bs2b_effect::~bs2b_effect() {}
