@@ -1,0 +1,35 @@
+#include "resource.h"
+
+#include <windows.h>
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_CONFIG_BS2B DIALOGEX 0, 0, 178, 125
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_VISIBLE |
+	WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_CONTROLPARENT
+CAPTION "bs2b settings"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+	GROUPBOX        "Crossfeed level",IDC_STATIC,
+	                7,7,163,57
+	CONTROL         "",IDC_SLIDER_LEVEL_FEED,"msctls_trackbar32",
+	                TBS_NOTICKS | WS_TABSTOP,
+	                14,21,80,12
+	LTEXT           "",IDC_STATIC_LEVEL_FEED,
+	                101,21,60,12
+	CONTROL         "",IDC_SLIDER_LEVEL_FCUT,"msctls_trackbar32",
+	                TBS_NOTICKS | WS_TABSTOP,
+	                14,43,80,12
+	LTEXT           "",IDC_STATIC_LEVEL_FCUT,
+	                101,43,60,12
+	PUSHBUTTON      "Default",IDC_BUTTON_DEFAULT,7,81,50,14
+	PUSHBUTTON      "C. Moy",IDC_BUTTON_CMOY,64,81,50,14
+	PUSHBUTTON      "J. Meier",IDC_BUTTON_JMEIER,121,81,50,14
+	DEFPUSHBUTTON   "&OK",IDOK,7,102,50,14
+	PUSHBUTTON      "&Cancel",IDCANCEL,64,102,50,14
+	PUSHBUTTON      "&About",IDC_BUTTON_ABOUT,121,102,50,14
+END
