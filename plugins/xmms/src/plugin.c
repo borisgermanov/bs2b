@@ -25,6 +25,7 @@
 
 
 static t_bs2bdp bs2b = NULL;
+static gint bs2b_srate = BS2B_DEFAULT_SRATE;
 
 
 void init() {
@@ -57,7 +58,10 @@ int mod_samples(gpointer * data, gint length, AFormat fmt, gint srate, gint nch)
 		return length;
 	}
 
-	bs2b_set_srate(bs2b, srate);
+	if (srate != bs2b_srate) {
+		bs2b_set_srate(bs2b, srate);
+		bs2b_srate = srate;
+	}
 
 	switch (fmt) {
 	#define ENABLE_CASE_C
