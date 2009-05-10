@@ -1,5 +1,5 @@
 /*
- * bs2b XMMS effect plugin
+ * XMMS bs2b effect plugin
  * Copyright (C) 2007, Sebastian Pipping <sebastian@pipping.org>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,23 +16,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifdef HAVE_CONFIG_H
-# include <config.h>
-#else
-# define VERSION "?.?.?"
-#endif
-
-
-
 #include <plugin.h>
 #include <bs2b.h>
 #include <string.h>
 #include <stdio.h>
 
+#include <config.h>
 
 
-t_bs2bdp bs2b = NULL;
-
+static t_bs2bdp bs2b = NULL;
 
 
 void init() {
@@ -40,7 +32,7 @@ void init() {
     if (bs2b == NULL) {
         return;
     }
-    bs2b_set_level(bs2b, BS2B_DEFAULT_CLEVEL);
+    bs2b_set_level(bs2b, XB_EFFECT_LEVEL);
 }
 
 
@@ -60,65 +52,21 @@ void nothing() {
 
 
 
-int mod_samples(gpointer * d, gint length, AFormat afmt, gint srate, gint nch) {
-    if (bs2b == NULL) {
-        return length;
-    }
-
-    /* Stereo only */
-    if (nch != 2) {
-        return length;
-    }
+int mod_samples(gpointer * data, gint length, AFormat fmt, gint srate, gint nch) {
+	if ((data == NULL) || (*data == NULL) || (nch != 2)) {
+		return length;
+	}
 
 	bs2b_set_srate(bs2b, srate);
 
-    switch (afmt) {
-    case FMT_U8:
-		{
-        	gint num = length / sizeof(unsigned char) / 2;
-			unsigned char * sptr = *d;
-
-			while (num--) {
-				bs2b_cross_feed_u8(bs2b, sptr);
-				sptr += 2;
-			}
-		}
-        return length;
-
-    case FMT_S8:
-		{
-        	gint num = length / sizeof(char) / 2;
-			char * sptr = *d;
-
-			while (num--) {
-				bs2b_cross_feed_s8(bs2b, sptr);
-				sptr += 2;
-			}
-		}
-        return length;
-
-    case FMT_S16_LE:
-		{
-        	gint num = length / sizeof(short) / 2;
-			short * sptr = *d;
-
-			while (num--) {
-				bs2b_cross_feed_16(bs2b, sptr);
-				sptr += 2;
-			}
-		}
-        return length;
-
-    /* TODO */
-    case FMT_S16_BE:
-    case FMT_S16_NE:
-    case FMT_U16_LE:
-    case FMT_U16_BE:
-    case FMT_U16_NE:
-    default:
-        return length;
-
-    }
+	switch (fmt) {
+	#define ENABLE_CASE_C
+	#include "case.c"
+	#undef ENABLE_CASE_C
+        default:
+		;
+	}
+	return length;
 }
 
 
