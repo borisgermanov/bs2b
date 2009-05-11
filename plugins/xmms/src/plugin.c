@@ -65,7 +65,7 @@ int mod_samples(gpointer * data, gint length, AFormat fmt, gint srate, gint nch)
 
 	switch (fmt) {
 	#define ENABLE_CASE_C
-	#include "case.c"
+	#include "case.c.inc"
 	#undef ENABLE_CASE_C
         default:
 		;

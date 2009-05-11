@@ -5,7 +5,7 @@ libxmmsbs2b_la_LDFLAGS = -module -avoid-version -nostdlib -lbs2b
 libxmmsbs2b_la_SOURCES = \
 	plugin.c
 
-BUILT_SOURCES = case.c
+BUILT_SOURCES = case.c.inc
 
 CLEANFILES = $(BUILT_SOURCES)
 
@@ -16,5 +16,5 @@ EXTRA_DIST = \
 	case.awk \
 	case.sh
 
-case.c: ${srcdir}/case.txt ${srcdir}/case.awk ${srcdir}/case.sh
+case.c.inc: ${srcdir}/case.txt ${srcdir}/case.awk ${srcdir}/case.sh
 	INPUT_DIR="${srcdir}/" OUTPUT_DIR="${builddir}/" "${srcdir}/case.sh"
