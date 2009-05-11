@@ -43,6 +43,7 @@ static void cleanup() {
 		return;
 	}
 	bs2b_close(bs2b);
+	bs2b = NULL;
 }
 
 
