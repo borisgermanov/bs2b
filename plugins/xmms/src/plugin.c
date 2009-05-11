@@ -29,26 +29,26 @@ static gint bs2b_srate = BS2B_DEFAULT_SRATE;
 
 
 void init() {
-    bs2b = bs2b_open();
-    if (bs2b == NULL) {
-        return;
-    }
-    bs2b_set_level(bs2b, XB_EFFECT_LEVEL);
+	bs2b = bs2b_open();
+	if (bs2b == NULL) {
+		return;
+	}
+	bs2b_set_level(bs2b, XB_EFFECT_LEVEL);
 }
 
 
 
 void cleanup() {
-    if (bs2b == NULL) {
-        return;
-    }
-    bs2b_close(bs2b);
+	if (bs2b == NULL) {
+		return;
+	}
+	bs2b_close(bs2b);
 }
 
 
 
 void nothing() {
-    /* NOOP */
+	/* NOOP */
 }
 
 
@@ -67,7 +67,7 @@ int mod_samples(gpointer * data, gint length, AFormat fmt, gint srate, gint nch)
 	#define ENABLE_CASE_C
 	#include "case.c.inc"
 	#undef ENABLE_CASE_C
-        default:
+		default:
 		;
 	}
 	return length;
@@ -102,7 +102,7 @@ EffectPlugin * get_eplugin_info() {
 			VERSION " (%s)";
 	const int format_len = strlen(version_format);
 	const int bs2b_version_len = strlen(bs2b_runtime_version());
-    const int final_len = format_len - 2 + bs2b_version_len;
+	const int final_len = format_len - 2 + bs2b_version_len;
 
 	if (xmmsBs2b.description != NULL) {
 		free(xmmsBs2b.description);

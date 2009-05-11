@@ -44,7 +44,7 @@ static gint mod_samples(gpointer * data, gint length, AFormat fmt, gint srate, g
 	#define ENABLE_CASE_C
 	#include "case.c"
 	#undef ENABLE_CASE_C
-        default:
+		default:
 		;
 	}
 	return length;
