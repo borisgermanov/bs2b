@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.63])
-AC_INIT([audacious-bs2b], [0.9.1], [sebastian@pipping.org])
+AC_INIT([audacious-bs2b], [0.9.2], [sebastian@pipping.org])
 AC_CONFIG_AUX_DIR([build-aux])
 AM_INIT_AUTOMAKE([1.10.1 -Wall foreign subdir-objects
                   dist-zip dist-bzip2 dist-lzma])
