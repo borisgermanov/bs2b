@@ -28,7 +28,7 @@ static t_bs2bdp bs2b = NULL;
 static gint bs2b_srate = BS2B_DEFAULT_SRATE;
 
 
-void init() {
+static void init() {
 	bs2b = bs2b_open();
 	if (bs2b == NULL) {
 		return;
@@ -38,7 +38,7 @@ void init() {
 
 
 
-void cleanup() {
+static void cleanup() {
 	if (bs2b == NULL) {
 		return;
 	}
@@ -47,13 +47,7 @@ void cleanup() {
 
 
 
-void nothing() {
-	/* NOOP */
-}
-
-
-
-int mod_samples(gpointer * data, gint length, AFormat fmt, gint srate, gint nch) {
+static int mod_samples(gpointer * data, gint length, AFormat fmt, gint srate, gint nch) {
 	if ((data == NULL) || (*data == NULL) || (nch != 2)) {
 		return length;
 	}
@@ -75,11 +69,9 @@ int mod_samples(gpointer * data, gint length, AFormat fmt, gint srate, gint nch)
 
 
 
-EffectPlugin xmmsBs2b = {
+static EffectPlugin xmmsBs2b = {
 	.init = init,
 	.cleanup = cleanup,
-	.about = nothing,
-	.configure = nothing,
 	.mod_samples = mod_samples
 };
 
