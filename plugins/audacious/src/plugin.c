@@ -25,6 +25,7 @@
 
 
 static t_bs2bdp bs2b = NULL;
+static gint bs2b_srate = BS2B_DEFAULT_SRATE;
 
 
 static void cleanup() {
@@ -38,6 +39,11 @@ static void cleanup() {
 static gint mod_samples(gpointer * data, gint length, AFormat fmt, gint srate, gint nch) {
 	if ((data == NULL) || (*data == NULL) || (nch != 2)) {
 		return length;
+	}
+
+	if (srate != bs2b_srate) {
+		bs2b_set_srate(bs2b, srate);
+		bs2b_srate = srate;
 	}
 
 	switch (fmt) {
