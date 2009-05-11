@@ -75,24 +75,12 @@ int mod_samples(gpointer * data, gint length, AFormat fmt, gint srate, gint nch)
 
 
 
-void query_format(AFormat * fmt, gint * rate, gint * nch) {
-	*fmt = FMT_S16_LE;
-	*rate = BS2B_DEFAULT_SRATE;
-	*nch = 2;
-}
-
-
-
 EffectPlugin xmmsBs2b = {
-	NULL, /* handle */
-	NULL, /* filename */
-	NULL, /* description */
-	init, /* init */
-	cleanup, /* cleanup */
-	nothing, /* about */
-	nothing, /* configure */
-	mod_samples,
-	query_format
+	.init = init,
+	.cleanup = cleanup,
+	.about = nothing,
+	.configure = nothing,
+	.mod_samples = mod_samples
 };
 
 
