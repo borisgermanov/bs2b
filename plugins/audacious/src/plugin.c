@@ -18,8 +18,6 @@
 
 #include <audacious/plugin.h>
 #include <bs2b.h>
-#include <string.h>
-#include <stdio.h>
 
 #include <config.h>
 

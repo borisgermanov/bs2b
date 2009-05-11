@@ -18,8 +18,9 @@
 
 #include <plugin.h>
 #include <bs2b.h>
-#include <string.h>
-#include <stdio.h>
+#include <string.h>  /* strlen */
+#include <stdio.h>  /* snprintf */
+#include <stdlib.h>  /* free */
 
 #include <config.h>
 
