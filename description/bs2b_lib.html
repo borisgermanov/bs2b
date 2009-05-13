@@ -11,9 +11,12 @@
 
 
 
+
+
+
   
   <meta content="Boris Mikhaylov" name="author"></head><body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);" alink="#000099" link="#000099" vlink="#990099">
-<table style="width: 700px; text-align: left; font-family: times new roman,times,serif;" border="0" cellpadding="2" cellspacing="2">
+<table style="width: 800px; text-align: left; font-family: times new roman,times,serif;" border="0" cellpadding="2" cellspacing="2">
   <tbody>
     <tr>
       <td style="vertical-align: top;"><big><span style="font-weight: bold;">Bauer stereophonic-to-binaural DSP: library
@@ -25,45 +28,44 @@ to use. See tables 1 and 2 for example. It is a reductive code of
 'bs2bstream.c'. The 'bs2b.h' and 'bs2bclass.h' files
 of the source code
 package can help also.<br>
-You can use a 'bs2bstream' with '<a href="http://lame.sourceforge.net/" target="_top">lame</a>' by a command line like this:<br>&nbsp; lame -t --decode test-44-16.wav - | bs2bstream -l d -b 16 -r 44.1 | \<br>&nbsp;&nbsp;&nbsp; lame -r -x -m j -s 44.1 --bitwidth 16 --preset extreme - test.mp3<br>
-or without of '-x' swap bytes of input file, like this:<br>&nbsp; lame -t --decode test-44-16.wav - | bs2bstream -l d -b 16 -r 44.1 | \<br>&nbsp;&nbsp;&nbsp; lame -r -m j -s 44.1 --bitwidth 16 --preset extreme - test.mp3<br><br>
+You can use a 'bs2bstream' with '<a href="http://lame.sourceforge.net/" target="_top">lame</a>' by a command line like this:<br>&nbsp; lame -t --decode test.wav - | bs2bstream | lame -r -x -m j -s 44.1 --bitwidth 16 --preset extreme - test.mp3<br>
+or without of '-x' swap bytes of input file, like this:<br>&nbsp; lame -t --decode test.wav - | bs2bstream | lame -r -m j -s 44.1 --bitwidth 16 --preset extreme - test.mp3<br><br>
       <span style="font-weight: bold;">Table 1. Example of using of bs2b
 library (C).</span><br>
       <table style="width: 100%; background-color: rgb(255, 255, 204); text-align: left; font-family: courier new,courier,monospace;" border="0" cellpadding="2" cellspacing="2">
         <tbody>
           <tr>
-            <td style="vertical-align: top;"><font size="-1">#include &lt;stdio.h&gt;<br>#include "bs2b.h"<br>
+            <td style="vertical-align: top;"><font size="-1">#include &lt;stdio.h&gt;<br>
+#include "bs2b.h"<br>
             <br>
 int main()<br>
 {<br>
 &nbsp; t_bs2bdp bs2bdp;<br>
-&nbsp; short&nbsp;&nbsp;&nbsp; sample[ 2 ];<br>
+&nbsp; short sample[ 2 ];<br>
             <br>
 &nbsp; bs2bdp = bs2b_open();<br>
-            <br></font><font size="-1">
+            <br>
 &nbsp; /* Default init value<br>
 &nbsp; bs2b_set_srate( bs2bdp, 44100 );<br>
 &nbsp; bs2b_set_level( bs2bdp, BS2B_DEFAULT_CLEVEL ); // 700 Hz, 4.5 dB<br>
-&nbsp; // or another way<br></font><font size="-1">
+&nbsp; // or another way<br>
 &nbsp; bs2b_set_srate( bs2bdp, 44100 );<br>
 &nbsp; bs2b_set_level_fcut( bs2bdp, 700 ); // 700 Hz<br>
-            </font><font size="-1">
 &nbsp; bs2b_set_level_feed( bs2bdp, 45 );&nbsp; // 4.5 dB<br>
-            </font><font size="-1">
 &nbsp; */<br>
-            </font><br>
-            <font size="-1">&nbsp; /* 16 bit raw PCM */<br>
+            <br>
+&nbsp; /* raw LPCM, signed 16 bit, native to CPU byte order, stereo interleaved */<br>
 &nbsp; while( 2 == fread( sample, sizeof( short ), 2, stdin ) )<br>
 &nbsp; {<br>
-&nbsp;&nbsp;&nbsp; bs2b_cross_feed_16( bs2bdp, sample );<br>
-&nbsp; &nbsp; fwrite( sample, sizeof( short ), 2, stdout );<br>
+&nbsp;&nbsp;&nbsp; bs2b_cross_feed_s16( bs2bdp, sample );<br>
+&nbsp;&nbsp;&nbsp; fwrite( sample, sizeof( short ), 2, stdout );<br>
 &nbsp; }<br>
             <br>
 &nbsp; bs2b_close( bs2bdp );<br>
 &nbsp; bs2bdp = 0;<br>
             <br>
 &nbsp; return 0 ;<br>
-}<br>
+}</font><font size="-1"><br>
             </font> </td>
           </tr>
         </tbody>
@@ -85,34 +87,32 @@ library (C++).</span><br>
 
         <tbody>
           <tr>
-            <td style="vertical-align: top;"><font size="-1">#include &lt;stdio.h&gt;<br>#include "bs2bclass.h"<br>
+            <td style="vertical-align: top;"><font size="-1">#include &lt;stdio.h&gt;<br>
+#include "bs2bclass.h"<br>
             <br>
 int main()<br>
 {<br>
 &nbsp; bs2b_base bs2b;<br>
-            <br></font><font size="-1">
-&nbsp; // </font><font size="-1">Default init value</font><br>
-
-
-            <font size="-1">
+            <br>
+&nbsp; // Default init value<br>
 &nbsp; //bs2b.set_srate( 44100 );<br>
-&nbsp; //bs2b.set_level( BS2B_DEFAULT_CLEVEL );</font><font size="-1"> // 700 Hz, 4.5 dB</font><br>
-
-            <font size="-1">&nbsp; // or another way<br></font><font size="-1">
+&nbsp; //bs2b.set_level( BS2B_DEFAULT_CLEVEL ); // 700 Hz, 4.5 dB<br>
+&nbsp; // or another way<br>
 &nbsp; //bs2b.set_srate( 44100 );<br>
 &nbsp; //bs2b.set_level_fcut( 700 ); // 700 Hz<br>
-            </font><font size="-1">
 &nbsp; //bs2b.set_level_feed( 45 );&nbsp; // 4.5 dB<br>
-            </font><font size="-1"><br>&nbsp; short sample[ 2 ]; // </font><font size="-1">16 bit raw PCM</font><br>
-            <font size="-1">&nbsp; while( 2 == fread( sample, sizeof( short ), 2, stdin ) )<br>
+            <br>
+&nbsp; // raw LPCM, signed 16 bit, native to CPU byte order, stereo interleaved<br>
+&nbsp; short sample[ 2 ];<br>
+&nbsp; while( 2 == fread( sample, sizeof( short ), 2, stdin ) )<br>
 &nbsp; {<br>
 &nbsp;&nbsp;&nbsp; bs2b.cross_feed( sample );<br>
 &nbsp;&nbsp;&nbsp; fwrite( sample, sizeof( short ), 2, stdout );<br>
 &nbsp; }<br>
             <br>
 &nbsp; return 0 ;<br>
-}<br>
-            </font> </td>
+}</font><font size="-1"></font><br>
+</td>
           </tr>
         </tbody>
       
