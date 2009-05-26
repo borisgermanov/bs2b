@@ -195,6 +195,9 @@ runBs2bLine(LADSPA_Handle Instance,
 		pfOutputLeft[lSampleIndex] = alternating[2 * lSampleIndex + 0];
 		pfOutputRight[lSampleIndex] = alternating[2 * lSampleIndex + 1];
 	}
+
+	/* TODO */
+	free(alternating);
 }
 
 /*****************************************************************************/
