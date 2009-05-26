@@ -67,6 +67,9 @@ typedef struct {
 	t_bs2bdp bs2b;
 	uint32_t levelBackup;
 
+	float * alternatingBuffer;
+	size_t bufferSampleCount;
+
 	/* Ports from here on */
 	LADSPA_Data * m_pfLowpass;
 	LADSPA_Data * m_pfFeeding;
@@ -104,6 +107,9 @@ instantiateBs2bLine(const LADSPA_Descriptor * Descriptor,
 	}
 	bs2b_set_srate(psBs2bLine->bs2b, SampleRate);
 	psBs2bLine->levelBackup = BS2B_DEFAULT_CLEVEL;
+
+	psBs2bLine->alternatingBuffer = NULL;
+	psBs2bLine->bufferSampleCount = 0;
 
 	return psBs2bLine;
 }
@@ -154,9 +160,6 @@ connectPortToBs2bLine(LADSPA_Handle Instance, unsigned long Port,
 void
 runBs2bLine(LADSPA_Handle Instance,
 		   unsigned long SampleCount) {
-	/* TODO optimize re-allocation away */
-	float * const alternating = malloc(sizeof(float) * SampleCount * 2);
-
 	LADSPA_Data * pfInputLeft;
 	LADSPA_Data * pfInputRight;
 	LADSPA_Data * pfOutputLeft;
@@ -175,10 +178,29 @@ runBs2bLine(LADSPA_Handle Instance,
 	pfOutputLeft = psBs2bLine->m_pfOutputLeft;
 	pfOutputRight = psBs2bLine->m_pfOutputRight;
 
+	/* Re-allocate when needed */
+	if (SampleCount > psBs2bLine->bufferSampleCount) {
+		float * const reallocated
+				= realloc(psBs2bLine->alternatingBuffer,
+				sizeof(float) * SampleCount * 2);
+		if (reallocated) {
+			psBs2bLine->alternatingBuffer = reallocated;
+			psBs2bLine->bufferSampleCount = SampleCount;
+		} else {
+			/* No suitable buffer to do processing with */
+			free(psBs2bLine->alternatingBuffer);
+			psBs2bLine->alternatingBuffer = NULL;
+			psBs2bLine->bufferSampleCount = 0;
+			return;
+		}
+	}
+
 	/* Write to channel-alternating buffer */
 	for (lSampleIndex = 0; lSampleIndex < SampleCount; lSampleIndex++) {
-		alternating[2 * lSampleIndex + 0] = pfInputLeft[lSampleIndex];
-		alternating[2 * lSampleIndex + 1] = pfInputRight[lSampleIndex];
+		psBs2bLine->alternatingBuffer[2 * lSampleIndex + 0]
+				= pfInputLeft[lSampleIndex];
+		psBs2bLine->alternatingBuffer[2 * lSampleIndex + 1]
+				= pfInputRight[lSampleIndex];
 	}
 
 	/* Sync settings */
@@ -188,16 +210,16 @@ runBs2bLine(LADSPA_Handle Instance,
 	}
 
 	/* Apply effect */
-	bs2b_cross_feed_f(psBs2bLine->bs2b, alternating, SampleCount);
+	bs2b_cross_feed_f(psBs2bLine->bs2b, psBs2bLine->alternatingBuffer,
+			SampleCount);
 
 	/* Read back from channel-alternating buffer */
 	for (lSampleIndex = 0; lSampleIndex < SampleCount; lSampleIndex++) {
-		pfOutputLeft[lSampleIndex] = alternating[2 * lSampleIndex + 0];
-		pfOutputRight[lSampleIndex] = alternating[2 * lSampleIndex + 1];
+		pfOutputLeft[lSampleIndex]
+				= psBs2bLine->alternatingBuffer[2 * lSampleIndex + 0];
+		pfOutputRight[lSampleIndex]
+				= psBs2bLine->alternatingBuffer[2 * lSampleIndex + 1];
 	}
-
-	/* TODO */
-	free(alternating);
 }
 
 /*****************************************************************************/
@@ -210,6 +232,10 @@ cleanupBs2bLine(LADSPA_Handle Instance) {
 		bs2b_close(psBs2bLine->bs2b);
 		psBs2bLine->bs2b = NULL;
 	}
+
+	free(psBs2bLine->alternatingBuffer);
+	psBs2bLine->alternatingBuffer = NULL;
+
 	free(psBs2bLine);
 }
 
