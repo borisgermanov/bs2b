@@ -255,8 +255,8 @@ _init() {
 
 	g_psDescriptor = (LADSPA_Descriptor *)malloc(sizeof(LADSPA_Descriptor));
 	if (g_psDescriptor) {
-		/* TODO replace with registered uniqui bs2b ladspa id */
-		g_psDescriptor->UniqueID = 0xb52b;
+		/* IDs 4221 to 4260 are reserved to bs2b */
+		g_psDescriptor->UniqueID = 4221;
 		g_psDescriptor->Label = strdup("bs2b");
 		g_psDescriptor->Properties = 0;
 		g_psDescriptor->Name = strdup("Bauer stereophonic-to-binaural " VERSION);
