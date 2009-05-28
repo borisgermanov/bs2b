@@ -46,27 +46,6 @@
 	)\
 )
 
-#define LB_NUM2STR_(num) #num
-#define LB_NUM2STR(num) LB_NUM2STR_(num)
-
-/* The defines below are meant to "workaround" LADSPA's lack for a
-   custom default value that is not exactly the middle of the slider. */
-#define LB_LOWPASS_RANGE (BS2B_MAXFCUT - BS2B_MINFCUT)
-#define LB_FEEDING_RANGE ((BS2B_MAXFEED - BS2B_MINFEED) / 10)
-
-#define LB_LOWPASS_SLIDER_DEFAULT (LB_EFFECT_LEVEL & 0xffff)
-#define LB_LOWPASS_SLIDER_MIN \
-	(float)(LB_LOWPASS_SLIDER_DEFAULT - LB_LOWPASS_RANGE)
-#define LB_LOWPASS_SLIDER_MAX \
-	(float)(LB_LOWPASS_SLIDER_DEFAULT + LB_LOWPASS_RANGE)
-
-#define LB_FEEDING_SLIDER_DEFAULT \
-	(((uint32_t)(LB_EFFECT_LEVEL & 0xffff0000) >> 16) / 10.0f)
-#define LB_FEEDING_SLIDER_MIN \
-	(float)(LB_FEEDING_SLIDER_DEFAULT - LB_FEEDING_RANGE)
-#define LB_FEEDING_SLIDER_MAX \
-	(float)(LB_FEEDING_SLIDER_DEFAULT + LB_FEEDING_RANGE)
-
 /*****************************************************************************/
 
 /* The port numbers for the plugin: */
@@ -321,18 +300,9 @@ _init() {
 		pcPortNames = (char **)calloc(LB_PORT_COUNT, sizeof(char *));
 		g_psDescriptor->PortNames = (const char **)pcPortNames;
 		pcPortNames[LB_PORT_LOWPASS]
-			= strdup("Lowpass filter cut frequency (Hz) ["
-			LB_NUM2STR(BS2B_MINFCUT)
-			".." LB_NUM2STR(BS2B_MAXFCUT) "]");
-
-		{
-			size_t const bufferSize = 40;
-			char * const final = malloc(bufferSize);
-			snprintf(final, bufferSize, "Feeding level (dB) [%d..%d]",
-				BS2B_MINFEED / 10, BS2B_MAXFEED / 10);
-			pcPortNames[LB_PORT_FEEDING] = final;
-		}
-
+			= strdup("Lowpass filter cut frequency (Hz)");
+		pcPortNames[LB_PORT_FEEDING]
+			= strdup("Feeding level (dB)");
 		pcPortNames[LB_PORT_INPUT_LEFT] = strdup("Input left");
 		pcPortNames[LB_PORT_INPUT_RIGHT] = strdup("Input right");
 		pcPortNames[LB_PORT_OUTPUT_LEFT] = strdup("Output left");
@@ -346,14 +316,14 @@ _init() {
 			= (LADSPA_HINT_BOUNDED_BELOW
 			| LADSPA_HINT_BOUNDED_ABOVE
 			| LADSPA_HINT_DEFAULT_MIDDLE);
-		psPortRangeHints[LB_PORT_LOWPASS].LowerBound = LB_LOWPASS_SLIDER_MIN;
-		psPortRangeHints[LB_PORT_LOWPASS].UpperBound = LB_LOWPASS_SLIDER_MAX;
+		psPortRangeHints[LB_PORT_LOWPASS].LowerBound = (float)BS2B_MINFCUT;
+		psPortRangeHints[LB_PORT_LOWPASS].UpperBound = (float)BS2B_MAXFCUT;
 		psPortRangeHints[LB_PORT_FEEDING].HintDescriptor
 			= (LADSPA_HINT_BOUNDED_BELOW
 			| LADSPA_HINT_BOUNDED_ABOVE
-			| LADSPA_HINT_DEFAULT_MIDDLE);
-		psPortRangeHints[LB_PORT_FEEDING].LowerBound = LB_FEEDING_SLIDER_MIN;
-		psPortRangeHints[LB_PORT_FEEDING].UpperBound = LB_FEEDING_SLIDER_MAX;
+			| LADSPA_HINT_DEFAULT_LOW);
+		psPortRangeHints[LB_PORT_FEEDING].LowerBound = BS2B_MINFEED / 10.0f;
+		psPortRangeHints[LB_PORT_FEEDING].UpperBound = BS2B_MAXFEED / 10.0f;
 		psPortRangeHints[LB_PORT_INPUT_LEFT].HintDescriptor = 0;
 		psPortRangeHints[LB_PORT_INPUT_RIGHT].HintDescriptor = 0;
 		psPortRangeHints[LB_PORT_OUTPUT_LEFT].HintDescriptor = 0;
