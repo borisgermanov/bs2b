@@ -14,23 +14,6 @@ AC_PROG_CC
 AC_DISABLE_STATIC  # Must come before AC_PROG_LIBTOOL
 AC_PROG_LIBTOOL
 
-
-AC_ARG_WITH(effect-level, [
-===========================================================================
-Extra options:
-AS_HELP_STRING([--with-effect-level=VAL], [Override default effect level])
-AS_HELP_STRING([], [(one of the BS2B_*LEVEL constants from bs2b.h)])
-===========================================================================], [
-	if test "x${withval}" = "x"; then
-		AC_MSG_ERROR([No value given for option --with-effect-level])
-	fi
-	LB_EFFECT_LEVEL=${withval}
-], [
-	LB_EFFECT_LEVEL=BS2B_DEFAULT_CLEVEL
-])
-AC_DEFINE_UNQUOTED(LB_EFFECT_LEVEL, ${LB_EFFECT_LEVEL}, [Effect level to apply])
-
-
 # Checks for libraries.
 BS2B_REQUIRED=3.0.0
 PKG_CHECK_MODULES([BS2B], [
