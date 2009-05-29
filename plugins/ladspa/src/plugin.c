@@ -31,7 +31,7 @@
 
 #include <config.h>
 #include <ladspa.h>
-#include <bs2b/bs2b.h>
+#include <bs2b.h>
 
 #include <stdlib.h>
 #include <stdio.h>
