@@ -315,7 +315,7 @@ _init() {
 		psPortRangeHints[LB_PORT_LOWPASS].HintDescriptor
 			= (LADSPA_HINT_BOUNDED_BELOW
 			| LADSPA_HINT_BOUNDED_ABOVE
-			| LADSPA_HINT_DEFAULT_MIDDLE);
+			| LADSPA_HINT_DEFAULT_LOW);
 		psPortRangeHints[LB_PORT_LOWPASS].LowerBound = (float)BS2B_MINFCUT;
 		psPortRangeHints[LB_PORT_LOWPASS].UpperBound = (float)BS2B_MAXFCUT;
 		psPortRangeHints[LB_PORT_FEEDING].HintDescriptor
