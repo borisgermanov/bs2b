@@ -37,7 +37,7 @@
 #error libbs2b version 3.0.0 or higher required.
 #endif
 
-static char _bs2b_version[]   = "3.0.0";
+static char _bs2b_version[]   = "3.1.0";
 static char _bs2b_name[]      = "bs2b";
 static char _bs2b_full_name[] = "Bauer stereophonic-to-binaural DSP";
 static char _bs2b_about[]     =
