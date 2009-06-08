@@ -197,10 +197,10 @@ bool bs2b_effect::getVendorString( char *text )
 
 VstInt32 bs2b_effect::getVendorVersion()
 {
-	// Version 2.0.0
+	// Version 2.1.0
 	return(
 		( ( VstInt32 )2 << 16 ) |
-		( ( VstInt32 )0 << 8 ) |
+		( ( VstInt32 )1 << 8 ) |
 		( ( VstInt32 )0 ) );
 }
 
