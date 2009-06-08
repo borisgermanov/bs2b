@@ -1,3 +1,10 @@
+2009-06-08 Boris Mikhaylov <http://www.tmn.ru/~bor>
+
+	3.1.0
+
+	* libbs2b 3.1.0 used with extended cut frequency
+	set from [300..1000] to [300..2000] Hz.
+
 2009-04-22 Boris Mikhaylov <http://www.tmn.ru/~bor>
 
 	3.0.0
