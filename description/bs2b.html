@@ -1,5 +1,10 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html><head><title>Bauer stereophonic-to-binaural DSP</title>
+<html><head>
+
+
+
+
+
 
 
 
@@ -10,8 +15,26 @@
 
 
   
-  <meta content="Boris Mikhaylov" name="author"></head><body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);" alink="#000099" link="#000099" vlink="#990099">
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+
+
+  <title>Bauer stereophonic-to-binaural DSP</title>
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <meta content="Boris Mikhaylov" name="author">
+</head><body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);" vlink="#990099" alink="#000099" link="#000099">
 <table style="width: 800px; text-align: left; font-family: times new roman,times,serif;" border="0" cellpadding="2" cellspacing="2">
+
   <tbody>
     <tr>
       <td style="vertical-align: top;"><big><big><span style="font-weight: bold;">Bauer stereophonic-to-binaural DSP.</span></big></big><br>
@@ -23,7 +46,7 @@ means
 that a sound engineer makes the stereo mix to the adaptation of sound
 for listen of one channel by both ears. Therefore, you will be tired
 during long time headphone listening more because superstereo effect than
-because of poor designed headphones. What’s missing
+because of poor designed headphones. What's missing
 in headphones is the sound going from each channel to the opposite ear,
 arriving a short time later for the extra distance traveled, and with a
 bit of high frequency roll-off for the shadowing effect of the head.
@@ -105,89 +128,51 @@ responses of the bs2b by using an H-transform <a href="bs2b.html#r5">[5]</a>.<br
         <tbody>
           <tr>
             <td style="vertical-align: top;"><font size="-1">#!/usr/bin/perl<br>
-            <br>
-use Math::Complex;<br>
-            <br>
-$s&nbsp;&nbsp;&nbsp; = 40000; # Sample rate (Hz)<br>
-            <br>
-$Fc&nbsp;&nbsp; = shift; # Lowpass filter cut frequency (Hz)<br>
-$Gd&nbsp;&nbsp; = shift; # Lowpass filter gain (dB)<br>
-$Ad_h = shift; # Highboost filter gain (dB) (0dB is highs)<br>
-            <br>
-# example:<br>
-# perl bs2b-H-transform.pl 700 -6.75&nbsp;&nbsp; -2.25&nbsp; # Default preset&nbsp;&nbsp;&nbsp;&nbsp; (700Hz, 4.5dB)<br>
-# perl bs2b-H-transform.pl 700 -8.00&nbsp;&nbsp; -2.00&nbsp; # Chu Moy's preset&nbsp;&nbsp; (700Hz, 6.0dB)<br>
-# perl bs2b-H-transform.pl 650 -10.917 -1.417 # Jan Meier's preset (650Hz, 9.5dB)</font><font size="-1"><br>
-            <br>
-$G&nbsp;&nbsp;&nbsp; = 10 ** ($Gd / 20);<br>
-$A_h&nbsp; = 10 ** ($Ad_h / 20);<br>
-$G_h&nbsp; = 1 - $A_h;<br>
-            <br>
-$Gd_h = 20 * log($G_h) / log(10);<br>
-$Fc_h = $Fc * (2 ** (($Gd - $Gd_h) / 12)); # '/3' by my theory, but...<br>
-            <br>
-print "Fc_low = $Fc\nFc_high = $Fc_h\n";<br>
-print "G = $G\nG_h = $G_h\n";<br>
-            <br>
-$fc&nbsp;&nbsp; = $Fc / $s;<br>
-$d&nbsp;&nbsp;&nbsp; = 1 / 2 / pi / $fc;<br>
-$x&nbsp;&nbsp;&nbsp; = exp(-1 / $d);<br>
-            <br>
-$fc_h = $Fc_h / $s;<br>
-$d_h&nbsp; = 1 / 2 / pi / $fc_h;<br>
-$x_h&nbsp; = exp(-1 / $d_h);<br>
-            <br>
-# Lowpass single pole filter coefficients<br>
-$b1&nbsp;&nbsp; = $x;<br>
-$a0&nbsp;&nbsp; = $G * (1 - $x);<br>
-$a1&nbsp;&nbsp; = 0;<br>
-            <br>
-# Highboost single pole filter coefficients<br>
-$b1_h = $x_h;<br>
-$a0_h = 1 - $G_h * (1 - $x_h);<br>
-$a1_h = -$x_h;<br>
-            <br>
-$w0 = 2 * pi * 4 / $s / 1.15;<br>
-$z = exp(i * $w0);<br>
-$H0&nbsp;&nbsp; = ($a0&nbsp;&nbsp; + $a1&nbsp;&nbsp; / $z) / (1 -
-$b1&nbsp;&nbsp; / $z);<br>
-$H0_h = ($a0_h + $a1_h / $z) / (1 - $b1_h / $z);<br>
-            <br>
-for ($w = $w0 * 1.15; $w &lt;= pi/2; $w0 = $w, $w *= 1.15)<br>
+            use Math::Complex;<br>
+            $s&nbsp;&nbsp;&nbsp; = 40000; # Sample rate ( Hz )<br>
+            $Fc&nbsp;&nbsp; = shift; # Lowpass filter cut frequency ( Hz )<br>
+$Gd&nbsp;&nbsp; = shift; # Lowpass filter gain ( dB )<br>
+$Ad_h = shift; # Highboost filter gain ( dB ) ( 0dB is highs )<br>
+            # example:<br>
+# perl bs2b-H-transform.pl 700 -6.75&nbsp;&nbsp; -2.25&nbsp; # Default preset&nbsp;&nbsp;&nbsp;&nbsp; ( 700Hz, 4.5dB )<br>
+# perl bs2b-H-transform.pl 700 -8.00&nbsp;&nbsp; -2.00&nbsp; # Chu Moy's preset&nbsp;&nbsp; ( 700Hz, 6.0dB )<br>
+# perl bs2b-H-transform.pl 650 -10.917 -1.417 # Jan Meier's preset ( 650Hz, 9.5dB )</font><font size="-1"><br>
+            $G&nbsp;&nbsp;&nbsp; = 10 ** ( $Gd / 20 ); $A_h&nbsp; = 10 ** ( $Ad_h / 20 ); $G_h&nbsp; = 1 - $A_h;<br>
+            $Gd_h = 20 * log( $G_h ) / log( 10 );<br>
+$Fc_h = $Fc * ( 2 ** ( ( $Gd - $Gd_h ) / 12 ) ); # '/3' by my theory, but...<br>
+            print "Fc_low = $Fc\nFc_high = $Fc_h\n"; print "G = $G\nG_h = $G_h\n";<br>
+            $fc = $Fc / $s; $d = 1 / 2 / pi / $fc; $x = exp( -1 / $d );<br>
+            $fc_h = $Fc_h / $s; $d_h = 1 / 2 / pi / $fc_h; $x_h = exp( -1 / $d_h );<br>
+            # Lowpass single pole filter coefficients<br>
+$b1 = $x; $a0 = $G * ( 1 - $x ); $a1 = 0;<br>
+            # Highboost single pole filter coefficients<br>
+$b1_h = $x_h; $a0_h = 1 - $G_h * ( 1 - $x_h ); $a1_h = -$x_h;<br>
+            $w0 = 2 * pi * 4 / $s / 1.15; $z = exp( i * $w0 );<br>
+$H0&nbsp;&nbsp; = ( $a0&nbsp;&nbsp; + $a1&nbsp;&nbsp; / $z ) / ( 1 -
+$b1&nbsp;&nbsp; / $z );<br>
+$H0_h = ( $a0_h + $a1_h / $z ) / ( 1 - $b1_h / $z );<br>
+            for( $w = $w0 * 1.15; $w &lt;= pi/2; $w0 = $w, $w *= 1.15 )<br>
 {<br>
-&nbsp;&nbsp;&nbsp; $z = exp(i * $w);<br>
-&nbsp;&nbsp;&nbsp; $H&nbsp;&nbsp; = ($a0&nbsp;&nbsp; + $a1&nbsp;&nbsp;
-/ $z) / (1 - $b1&nbsp;&nbsp; / $z);<br>
-&nbsp;&nbsp;&nbsp; $H_h = ($a0_h + $a1_h / $z) / (1 - $b1_h / $z);<br>
-            <br>
-&nbsp;&nbsp;&nbsp; $str = sprintf("%f\t%f\t%f\t%f\t%f\t%f\t%f\n",<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $s * $w / 2 / pi,<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; rho($H),&nbsp;&nbsp;&nbsp; #
-20 * log(rho($H)) / log(10) (dB)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; theta($H) * 180 /
-pi,&nbsp;&nbsp;&nbsp; # degree<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (theta($H) - theta($H0)) /
-($w - $w0) * 1000000 / $s,&nbsp;&nbsp;&nbsp;&nbsp; # mcs<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; rho($H_h),&nbsp; # 20 *
-log(rho($H_h)) / log(10)<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; theta($H_h) * 180 /
-pi,&nbsp; # degree<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (theta($H_h) - theta($H0_h))
-/ ($w - $w0) * 1000000 / $s&nbsp; # mcs<br>
-&nbsp;&nbsp;&nbsp; );<br>
-            <br>
-&nbsp;&nbsp;&nbsp; $str =~ s/\./\,/g; # Russian locale<br>
-&nbsp;&nbsp; <br>
-&nbsp;&nbsp;&nbsp; print $str;<br>
-            <br>
-&nbsp;&nbsp;&nbsp; $H0&nbsp;&nbsp; = $H;<br>
-&nbsp;&nbsp;&nbsp; $H0_h = $H_h;<br>
-}<br>
-            </font> </td>
-          </tr>
-        </tbody>
-      </table>
-      <br>
+&nbsp; $z = exp( i * $w );<br>
+&nbsp; $H&nbsp;&nbsp; = ( $a0&nbsp;&nbsp; + $a1&nbsp;&nbsp; / $z ) / ( 1 - $b1&nbsp;&nbsp; / $z );<br>
+&nbsp; $H_h = ( $a0_h + $a1_h / $z ) / ( 1 - $b1_h / $z );<br>
+&nbsp; printf( "%f\t%f\t%f\t%f\t%f\t%f\t%f\n",<br>
+&nbsp;&nbsp;&nbsp; $s * $w / 2 / pi,<br>
+&nbsp;&nbsp;&nbsp; rho( $H
+),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+# 20 * log( rho( $H ) ) / log( 10 ) ( dB )<br>
+&nbsp;&nbsp;&nbsp; theta( $H ) * 180 /
+pi,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+# degree<br>
+&nbsp;&nbsp;&nbsp; ( theta( $H ) - theta( $H0 ) ) / ( $w - $w0 ) * 1000000 / $s,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # mcs<br>
+&nbsp;&nbsp;&nbsp; rho( $H_h
+),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+# 20 * log( rho( $H_h ) ) / log( 10 )<br>
+&nbsp;&nbsp;&nbsp; theta( $H_h ) * 180 / pi,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # degree<br>
+&nbsp;&nbsp;&nbsp; ( theta( $H_h ) - theta( $H0_h ) ) / ( $w - $w0 ) * 1000000 / $s&nbsp;&nbsp;&nbsp;&nbsp; # mcs<br>
+&nbsp; );<br>
+&nbsp; $H0 = $H; $H0_h = $H_h;<br>
+}<br></font></td></tr></tbody></table><br>
 Figures 2.1 and 2.2 shows the results of the above program. In other
 words, it is a theoretical responses of bs2b DSP. 'Sum' is the sum of
 the signals after the lowpass and highboost filters,
@@ -227,16 +212,24 @@ presented as a response of highboost filter and
 as a response of lowpass filter.<br>
       <br>
       <span style="font-weight: bold;">Figure 3.1. bs2b frequency
-response (700 Hz, 6 dB).</span><br>
+response ( 700 Hz, 6 dB ).</span><br>
       <img alt="bs2b frequency response" src="img/bs2b_exdata_f.png" style="width: 755px; height: 630px;"><br>
       <br>
-Figure 3.2 shows the frequency analysis of a real stereo audio signal.<br>
+Figures 3.2 and 3.3 shows the frequency analysis of a real stereo
+signal. There is a classical and a rock samples. You can check an mp3
+versions of this samples (original and effected by bs2b with Chu Moy's preset): <a href="http://bs2b.sourceforge.net/sample/sample_Bach.mp3">sample_Bach</a>, <a href="http://bs2b.sourceforge.net/sample/sample_Bach-bs2b.mp3">sample_Bach-bs2b</a>, <a href="http://bs2b.sourceforge.net/sample/sample_ACDC.mp3">sample_ACDC</a>, <a href="http://bs2b.sourceforge.net/sample/sample_ACDC-bs2b.mp3">sample_ACDC-bs2b</a>.<br>
       <br>
-      <span style="font-weight: bold;">Figure 3.2. J.S. Bach
-"BWV1066"
-"Overture" frequency analysis (700 Hz, 6 dB).</span><br>
-      <img alt="J.S. Bach &quot;BWV1066&quot; &quot;Overture&quot; frequency analysis difference" src="img/Bach-BWV1066-Overture-diff.png" style="width: 755px; height: 630px;"><br>
+      <span style="font-weight: bold;">Figure 3.2. Sample of J.S. Bach
+"BWV1066" frequency analysis ( 700 Hz, 6 dB ).</span><br>
+      <img alt="Sample of J.S. Bach &quot;BWV1066&quot; frequency analysis ( 700 Hz, 6 dB )" src="img/sample_Bach.png" style="width: 755px; height: 424px;"><br>
       <br>
+
+      <span style="font-weight: bold;">Figure 3.3. Sample of AC/DC "Thunderstruck" frequency analysis ( 700 Hz, 6 dB ).</span><br>
+
+      <img alt="Sample of AC/DC &quot;Thunderstruck&quot; frequency analysis ( 700 Hz, 6 dB )" src="img/sample_ACDC.png" style="width: 755px; height: 424px;"><br>
+
+      <br>
+
       <br>
       <big><span style="font-weight: bold;"><a name="References"></a>4.
 References.</span></big><br>
@@ -251,17 +244,17 @@ Number 2 pp. 148-151; April 1961. <a href="http://www.aes.org/" target="_top">ht
       <br>
       <a name="r2"></a>[2] &nbsp;Siegfried Linkwitz. Improved Headphone
 Listening. Build a stereo-crossfeed circuit.<br>
-      <div style="margin-left: 40px;">Audio; December 1971. <a href="http://www.linkwitzlab.com/" target="_top">http://www.linkwitzlab.com/</a><br>
+      <div style="margin-left: 40px;">Audio; December 1971. <a href="http://www.linkwitzlab.com/headphone-xfeed.htm" target="_top">http://www.linkwitzlab.com/headphone-xfeed.htm</a><br>
       </div>
       <br>
       <a name="r3"></a>[3] &nbsp;Chu Moy. An Acoustic Simulator for
 Headphone
 Amplifiers.<br>
-      <div style="margin-left: 40px;">(C) 1998-2001 Chu Moy. <a href="http://headwize.com/projects/showfile.php?file=cmoy1_prj.htm" target="_top">http://headwize.com/projects/showfile.php?file=cmoy1_prj.htm</a><br>
+      <div style="margin-left: 40px;">(C) 1998-2001 Chu Moy. <a href="http://gilmore2.chem.northwestern.edu/projects/showfile.php?file=cmoy1_prj.htm" target="_top">http://gilmore2.chem.northwestern.edu/projects/showfile.php?file=cmoy1_prj.htm</a><br>
       </div>
       <br>
       <a name="r4"></a>[4] &nbsp;Jan Meier. A DIY Headphone Amplifier.<br>
-      <div style="margin-left: 40px;"><a href="http://www.meier-audio.de/" target="_top">http://www.meier-audio.de/</a>, <a href="http://bs2b.sourceforge.net/ARIETTA/index.html">CORDA ARIETTA</a><br>
+      <div style="margin-left: 40px;"><a href="http://www.meier-audio.homepage.t-online.de/" target="_top">http://www.meier-audio.homepage.t-online.de/</a>, <a href="http://bs2b.sourceforge.net/ARIETTA/index.html">CORDA ARIETTA</a><br>
       </div>
       <br>
       <a name="r5"></a>[5] &nbsp;Steven W. Smith, Ph.D. The Scientist
@@ -275,7 +268,7 @@ Publishing; ISBN 0-9660176-3-3 (1997). <a href="http://www.dspguide.com/" target
 Sound
 Processing.<br>
       <div style="margin-left: 40px;">(C) 2003 Davide Rocchesso, GNU
-FDL. <a href="http://profs.sci.univr.it/%7Erocchess" target="_top">http://profs.sci.univr.it/~rocchess</a><br>
+FDL. <a href="http://profs.sci.univr.it/%7Erocchess/htmls/corsi/SoundProcessing/SoundProcessingBook/vsp.pdf" target="_top">http://profs.sci.univr.it/~rocchess/htmls/corsi/SoundProcessing/SoundProcessingBook/vsp.pdf</a><br>
       </div>
       <br>
       <a name="r7"></a>[7] &nbsp;BORES Signal Processing: Introduction
@@ -287,12 +280,12 @@ DSP.<br>
       <br>
       <a name="r8"></a>[8] &nbsp;Richard O.Duda. 3-D Audio for HCI.<br>
       <div style="margin-left: 40px;">(C)
-1996-2000 Richard O.Duda. <a href="http://interface.cipic.ucdavis.edu/" target="_top">http://interface.cipic.ucdavis.edu/</a><br>
+1996-2000 Richard O.Duda. <a href="http://interface.idav.ucdavis.edu/CIL_tutorial/3D_home.htm" target="_top">http://interface.idav.ucdavis.edu/CIL_tutorial/3D_home.htm</a><br>
       </div>
       <br>
-      <a name="r9"></a>[9]&nbsp; HeadRoom. About the HeadRoom
+      <a name="r9"></a>[9]&nbsp; HeadRoom. About HeadRoom
 Crossfeed.<br>
-      <div style="margin-left: 40px;">(C) 1995-2006 HeadRoom. <a href="http://www.headphone.com/products/faqs/about-headroom-crossfeed/" target="_top">http://www.headphone.com/products/faqs/about-headroom-crossfeed/</a><br>
+      <div style="margin-left: 40px;">(C) 1995-2006 HeadRoom. <a href="http://www.headphone.com/learning-center/about-headroom-crossfeed.php" target="_top">http://www.headphone.com/learning-center/about-headroom-crossfeed.php</a><br>
       </div>
       <br>
       <a name="r10"></a>[10]&nbsp; John Conover. Spatial Distortion
@@ -309,10 +302,18 @@ Reduction Headphone Amplifier.<br>
 
       <br>
 
+
+      <a name="r12"></a>[12]&nbsp; Digital filter. From Wikipedia, the free encyclopedia.<br>
+      <div style="margin-left: 40px;"><a href="http://en.wikipedia.org/wiki/Digital_filter" target="_top">http://en.wikipedia.org/wiki/Digital_filter</a><br>
+      </div>
+      <br>
+
+
       
-      <hr style="width: 100%; height: 2px;">Copyright (c) 2005-2009&nbsp;
+      <hr style="width: 100%; height: 2px;">Copyright (c) 2005-2010&nbsp;
 Boris Mikhaylov &lt; <a href="http://www.tmn.ru/%7Ebor" target="_top">http://www.tmn.ru/~bor</a>&gt;</td>
     </tr>
   </tbody>
 </table>
+
 </body></html>
