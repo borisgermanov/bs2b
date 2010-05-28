@@ -1,0 +1,319 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+
+
+  <title>Bauer stereophonic-to-binaural DSP</title>
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <meta content="Boris Mikhaylov" name="author">
+</head><body style="color: rgb(0, 0, 0); background-color: rgb(255, 255, 255);" vlink="#990099" alink="#000099" link="#000099">
+<table style="width: 800px; text-align: left; font-family: times new roman,times,serif;" border="0" cellpadding="2" cellspacing="2">
+
+  <tbody>
+    <tr>
+      <td style="vertical-align: top;"><big><big><span style="font-weight: bold;">Bauer stereophonic-to-binaural DSP.</span></big></big><br>
+      <big><span style="font-weight: bold;"><br>
+      <a name="Preface"></a>1.
+Preface.</span></big><br>
+      <br>Typical stereo recordings are being made to listen by speakers. This
+means
+that a sound engineer makes the stereo mix to the adaptation of sound
+for listen of one channel by both ears. Therefore, you will be tired
+during long time headphone listening more because superstereo effect than
+because of poor designed headphones. What's missing
+in headphones is the sound going from each channel to the opposite ear,
+arriving a short time later for the extra distance traveled, and with a
+bit of high frequency roll-off for the shadowing effect of the head.
+And the time delay to the far
+ear is somewhat longer at low frequencies than at high frequencies.
+The Bauer stereophonic-to-binaural DSP (<a href="http://bs2b.sourceforge.net/" target="_top">bs2b</a>) is
+designed to improve headphone listening of stereo audio records. This
+improvement have been well described by electronic circuit designers
+like
+Benjamin Bauer <a href="#r1">[1]</a>, Siegfried Linkwitz <a href="#r2">[2]</a>,
+Chu Moy <a href="#r3">[3]</a>, Jan Meier <a href="#r4">[4]</a>, John
+Conover <a href="#r10">[10]</a>,
+HeadRoom <a href="#r9">[9]</a>.
+The time delay at low frequency range, lowpass filters, highboost
+filters and crossfeeding of their electronic circuits has been made by
+first order
+RL
+(Bauer) or RC
+(Linkwitz, Moy, Meier) analog filters. This design makes the desired
+effects and naturally excludes the effect of comb filter in the upper
+range of frequencies through the nonlinear property&nbsp; of
+phase-frequency response of these filters. bs2b doing the same work
+through the simple and fast (in comparison with convolution) single
+pole recursive digital filters, because
+these filters have the same properties as an electronic RC-filters <a href="#r5">[5]</a>, <a href="#r6">[6]</a>, <a href="#r7">[7]</a>.
+I have
+select a such values of cutoff frequencies of lowpass and
+highboost
+filters that allows to provide the desired time delay and
+most smooth resulting frequency
+response. Unfortunately, I have not calculated the actual value
+of the
+frequency
+cutoff of highboost filter, but it is not so important. A highboost
+digital filter can be represented as a two-step filter: as the
+subtraction of attenuated lowpass filtered signal from original signal.
+This
+can be mathematically described by one-step recursive filter. In
+the first (1.0.0) release of bs2b I applied a two-step method for highboost filter with using of already
+calculated lowpas filtered signal, but this is done the value of frequency cutoff of highboost filter a little
+less than I expected, and this led to the thickness of low-medium frequency range.
+Nevertheless, as written by Chu Moy <a href="#r3">[3]</a>,
+the frequency cutoff of highboost filter should be a bit
+higher than this value for the lowpass filter to achieve a smooth
+frequency
+response of crossfeeder. Therefore, I made a one-step highboost
+filter for the second release of bs2b. I started this project
+because the sound of other audioplayer's headphone
+plugins, that I heard before, did not satisfy me. Major deterioration
+of the sound produced by comb filter effect due to the use of FFT
+convolution with a linear phase frequency response. There is a <a href="http://www.stereo-balance.net/" target="_top">HeadPlug</a>
+plugin which have
+the option 'decomb', and the author writes about this: "The way the
+plugin does
+this is
+really damn-ass straight-forward from a technical point of view". I
+have tried to make it much easier for the CPU. Last comment. The bs2b
+does not produce any simulation of ambient, and does not produce any
+HRTF <a href="#r8">[8]</a> transform in a high frequency
+range. Some implementations of the HRTF in a high frequency range are produced by good headphones, except
+of case of binaural headphones like <a href="http://www.etymotic.com/" target="_top">Etymotic</a> ER-4B.<br>
+So, try to use bs2b to feel sound little out from your
+head to lighten the work of&nbsp; your brain.<br>
+      <br>
+      <big><span style="font-weight: bold;"><a name="Theoretical_issue"></a>2.
+Theory.</span></big><br>
+      <br>A single
+pole recursive filter are
+presented by recursion eqation:<br>
+O[n] = a0 * I[n] + a1 * I[n-1] + b1 * O[n-1]<br>
+where a0, a1, b1 is a recursion coefficients, I[n] is an input samples,
+O[n] is an output (filtered) samples. Filter's response is relay to
+recursion coefficients. The table 2.1 shows a perl program that calculates the
+frequency and a time delay
+responses of the bs2b by using an H-transform <a href="bs2b.html#r5">[5]</a>.<br>
+      <br>
+      <span style="font-weight: bold;">Table 2.1. bs2b-H-transform.pl.</span><br>
+      <table style="width: 100%; background-color: rgb(255, 255, 204); text-align: left; font-family: courier new,courier,monospace;" border="0" cellpadding="2" cellspacing="2">
+        <tbody>
+          <tr>
+            <td style="vertical-align: top;"><font size="-1">#!/usr/bin/perl<br>
+            use Math::Complex;<br>
+            $s&nbsp;&nbsp;&nbsp; = 40000; # Sample rate ( Hz )<br>
+            $Fc&nbsp;&nbsp; = shift; # Lowpass filter cut frequency ( Hz )<br>
+$Gd&nbsp;&nbsp; = shift; # Lowpass filter gain ( dB )<br>
+$Ad_h = shift; # Highboost filter gain ( dB ) ( 0dB is highs )<br>
+            # example:<br>
+# perl bs2b-H-transform.pl 700 -6.75&nbsp;&nbsp; -2.25&nbsp; # Default preset&nbsp;&nbsp;&nbsp;&nbsp; ( 700Hz, 4.5dB )<br>
+# perl bs2b-H-transform.pl 700 -8.00&nbsp;&nbsp; -2.00&nbsp; # Chu Moy's preset&nbsp;&nbsp; ( 700Hz, 6.0dB )<br>
+# perl bs2b-H-transform.pl 650 -10.917 -1.417 # Jan Meier's preset ( 650Hz, 9.5dB )</font><font size="-1"><br>
+            $G&nbsp;&nbsp;&nbsp; = 10 ** ( $Gd / 20 ); $A_h&nbsp; = 10 ** ( $Ad_h / 20 ); $G_h&nbsp; = 1 - $A_h;<br>
+            $Gd_h = 20 * log( $G_h ) / log( 10 );<br>
+$Fc_h = $Fc * ( 2 ** ( ( $Gd - $Gd_h ) / 12 ) ); # '/3' by my theory, but...<br>
+            print "Fc_low = $Fc\nFc_high = $Fc_h\n"; print "G = $G\nG_h = $G_h\n";<br>
+            $fc = $Fc / $s; $d = 1 / 2 / pi / $fc; $x = exp( -1 / $d );<br>
+            $fc_h = $Fc_h / $s; $d_h = 1 / 2 / pi / $fc_h; $x_h = exp( -1 / $d_h );<br>
+            # Lowpass single pole filter coefficients<br>
+$b1 = $x; $a0 = $G * ( 1 - $x ); $a1 = 0;<br>
+            # Highboost single pole filter coefficients<br>
+$b1_h = $x_h; $a0_h = 1 - $G_h * ( 1 - $x_h ); $a1_h = -$x_h;<br>
+            $w0 = 2 * pi * 4 / $s / 1.15; $z = exp( i * $w0 );<br>
+$H0&nbsp;&nbsp; = ( $a0&nbsp;&nbsp; + $a1&nbsp;&nbsp; / $z ) / ( 1 -
+$b1&nbsp;&nbsp; / $z );<br>
+$H0_h = ( $a0_h + $a1_h / $z ) / ( 1 - $b1_h / $z );<br>
+            for( $w = $w0 * 1.15; $w &lt;= pi/2; $w0 = $w, $w *= 1.15 )<br>
+{<br>
+&nbsp; $z = exp( i * $w );<br>
+&nbsp; $H&nbsp;&nbsp; = ( $a0&nbsp;&nbsp; + $a1&nbsp;&nbsp; / $z ) / ( 1 - $b1&nbsp;&nbsp; / $z );<br>
+&nbsp; $H_h = ( $a0_h + $a1_h / $z ) / ( 1 - $b1_h / $z );<br>
+&nbsp; printf( "%f\t%f\t%f\t%f\t%f\t%f\t%f\n",<br>
+&nbsp;&nbsp;&nbsp; $s * $w / 2 / pi,<br>
+&nbsp;&nbsp;&nbsp; rho( $H
+),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+# 20 * log( rho( $H ) ) / log( 10 ) ( dB )<br>
+&nbsp;&nbsp;&nbsp; theta( $H ) * 180 /
+pi,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+# degree<br>
+&nbsp;&nbsp;&nbsp; ( theta( $H ) - theta( $H0 ) ) / ( $w - $w0 ) * 1000000 / $s,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # mcs<br>
+&nbsp;&nbsp;&nbsp; rho( $H_h
+),&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+# 20 * log( rho( $H_h ) ) / log( 10 )<br>
+&nbsp;&nbsp;&nbsp; theta( $H_h ) * 180 / pi,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # degree<br>
+&nbsp;&nbsp;&nbsp; ( theta( $H_h ) - theta( $H0_h ) ) / ( $w - $w0 ) * 1000000 / $s&nbsp;&nbsp;&nbsp;&nbsp; # mcs<br>
+&nbsp; );<br>
+&nbsp; $H0 = $H; $H0_h = $H_h;<br>
+}<br></font></td></tr></tbody></table><br>
+Figures 2.1 and 2.2 shows the results of the above program. In other
+words, it is a theoretical responses of bs2b DSP. 'Sum' is the sum of
+the signals after the lowpass and highboost filters,
+which can be interpreted as a bs2b action to the two channel mono
+signal.<br>
+      <br>
+      <span style="font-weight: bold;">Figure 2.1. bs2b theoretical
+frequency
+response.</span><br>
+      <img alt="bs2b theoretical frequency response" src="img/bs2b_h-trans_f.png" style="width: 755px; height: 630px;"><br>
+      <br>On the figure 2.2 a negative value of time represents a delay of signal by
+microseconds.<br>
+      <br>
+      <span style="font-weight: bold;">Figure 2.2. bs2b theoretical
+time delay response.</span><br>
+      <img alt="bs2b theoretical time delay response" src="img/bs2b_h-trans_d.png" style="width: 755px; height: 359px;"><br>
+      <br>Above shows the three versions with different sets of cut-off frequency and crossfeed level:<br>
+1) 700 Hz, 4.5 dB - default - this setting is closest to the virtual
+speaker placement with azimuth 30 degrees and the removal of about 3
+meters, while listening by headphones.<br>
+2) 700 Hz, 6 dB - most popular - this setting is close to the parameters of a Chu Moy's <a href="bs2b.html#r3">[3]</a> crossfeeder.<br>
+3) 650 Hz, 9.5 dB - making the smallest changes in the original signal
+only for relaxing listening by headphones - this setting is close to
+the parameters of a crossfeeder implemented in Jan Meier's <a href="bs2b.html#r4">[4]</a> CORDA amplifiers.<br>
+      <br>
+      <big><span style="font-weight: bold;"><a name="Practical_data"></a>3.
+Practical data.<br>
+      </span></big><br>
+Figure 3.1 shows the practical frequency responses of
+the bs2b with Chu Moy's <a href="bs2b.html#r3">[3]</a>
+(700 Hz, 6 dB) setting. This is a frequency analysis of white noise
+signals applied to
+bs2b. There is three types of white noise signals: 'Mono' is two
+channel mono signal; 'Independ' is a two channel independ signal; one
+channel signal. Processing of the one channel signal through a bs2b is
+presented as a response of highboost filter and
+as a response of lowpass filter.<br>
+      <br>
+      <span style="font-weight: bold;">Figure 3.1. bs2b frequency
+response ( 700 Hz, 6 dB ).</span><br>
+      <img alt="bs2b frequency response" src="img/bs2b_exdata_f.png" style="width: 755px; height: 630px;"><br>
+      <br>
+Figures 3.2 and 3.3 shows the frequency analysis of a real stereo
+signal. There is a classical and a rock samples. You can check an mp3
+versions of this samples (original and effected by bs2b with Chu Moy's preset): <a href="http://bs2b.sourceforge.net/sample/sample_Bach.mp3">sample_Bach</a>, <a href="http://bs2b.sourceforge.net/sample/sample_Bach-bs2b.mp3">sample_Bach-bs2b</a>, <a href="http://bs2b.sourceforge.net/sample/sample_ACDC.mp3">sample_ACDC</a>, <a href="http://bs2b.sourceforge.net/sample/sample_ACDC-bs2b.mp3">sample_ACDC-bs2b</a>.<br>
+      <br>
+      <span style="font-weight: bold;">Figure 3.2. Sample of J.S. Bach
+"BWV1066" frequency analysis ( 700 Hz, 6 dB ).</span><br>
+      <img alt="Sample of J.S. Bach &quot;BWV1066&quot; frequency analysis ( 700 Hz, 6 dB )" src="img/sample_Bach.png" style="width: 755px; height: 424px;"><br>
+      <br>
+
+      <span style="font-weight: bold;">Figure 3.3. Sample of AC/DC "Thunderstruck" frequency analysis ( 700 Hz, 6 dB ).</span><br>
+
+      <img alt="Sample of AC/DC &quot;Thunderstruck&quot; frequency analysis ( 700 Hz, 6 dB )" src="img/sample_ACDC.png" style="width: 755px; height: 424px;"><br>
+
+      <br>
+
+      <br>
+      <big><span style="font-weight: bold;"><a name="References"></a>4.
+References.</span></big><br>
+      <br>
+      <a name="r1"></a>[1] &nbsp;Benjamin B. Bauer. Stereophonic
+Earphones
+and
+Binaural Loudspeakers.<br>
+      <div style="margin-left: 40px;">JAES Volume 9
+Number 2 pp. 148-151; April 1961. <a href="http://www.aes.org/" target="_top">http://www.aes.org/</a><br>
+      </div>
+      <br>
+      <a name="r2"></a>[2] &nbsp;Siegfried Linkwitz. Improved Headphone
+Listening. Build a stereo-crossfeed circuit.<br>
+      <div style="margin-left: 40px;">Audio; December 1971. <a href="http://www.linkwitzlab.com/headphone-xfeed.htm" target="_top">http://www.linkwitzlab.com/headphone-xfeed.htm</a><br>
+      </div>
+      <br>
+      <a name="r3"></a>[3] &nbsp;Chu Moy. An Acoustic Simulator for
+Headphone
+Amplifiers.<br>
+      <div style="margin-left: 40px;">(C) 1998-2001 Chu Moy. <a href="http://gilmore2.chem.northwestern.edu/projects/showfile.php?file=cmoy1_prj.htm" target="_top">http://gilmore2.chem.northwestern.edu/projects/showfile.php?file=cmoy1_prj.htm</a><br>
+      </div>
+      <br>
+      <a name="r4"></a>[4] &nbsp;Jan Meier. A DIY Headphone Amplifier.<br>
+      <div style="margin-left: 40px;"><a href="http://www.meier-audio.homepage.t-online.de/" target="_top">http://www.meier-audio.homepage.t-online.de/</a>, <a href="http://bs2b.sourceforge.net/ARIETTA/index.html">CORDA ARIETTA</a><br>
+      </div>
+      <br>
+      <a name="r5"></a>[5] &nbsp;Steven W. Smith, Ph.D. The Scientist
+and
+Engineer's Guide to Digital Signal Processing.<br>
+      <div style="margin-left: 40px;">California Technical
+Publishing; ISBN 0-9660176-3-3 (1997). <a href="http://www.dspguide.com/" target="_top">http://www.dspguide.com/</a><br>
+      </div>
+      <br>
+      <a name="r6"></a>[6] &nbsp;Davide Rocchesso. Introduction to
+Sound
+Processing.<br>
+      <div style="margin-left: 40px;">(C) 2003 Davide Rocchesso, GNU
+FDL. <a href="http://profs.sci.univr.it/%7Erocchess/htmls/corsi/SoundProcessing/SoundProcessingBook/vsp.pdf" target="_top">http://profs.sci.univr.it/~rocchess/htmls/corsi/SoundProcessing/SoundProcessingBook/vsp.pdf</a><br>
+      </div>
+      <br>
+      <a name="r7"></a>[7] &nbsp;BORES Signal Processing: Introduction
+to
+DSP.<br>
+      <div style="margin-left: 40px;">(C) 2004 Bores Signal Processing.
+      <a href="http://www.bores.com/courses/intro/index.htm" target="_top">http://www.bores.com/courses/intro/index.htm</a><br>
+      </div>
+      <br>
+      <a name="r8"></a>[8] &nbsp;Richard O.Duda. 3-D Audio for HCI.<br>
+      <div style="margin-left: 40px;">(C)
+1996-2000 Richard O.Duda. <a href="http://interface.idav.ucdavis.edu/CIL_tutorial/3D_home.htm" target="_top">http://interface.idav.ucdavis.edu/CIL_tutorial/3D_home.htm</a><br>
+      </div>
+      <br>
+      <a name="r9"></a>[9]&nbsp; HeadRoom. About HeadRoom
+Crossfeed.<br>
+      <div style="margin-left: 40px;">(C) 1995-2006 HeadRoom. <a href="http://www.headphone.com/learning-center/about-headroom-crossfeed.php" target="_top">http://www.headphone.com/learning-center/about-headroom-crossfeed.php</a><br>
+      </div>
+      <br>
+      <a name="r10"></a>[10]&nbsp; John Conover. Spatial Distortion
+Reduction Headphone Amplifier.<br>
+      <div style="margin-left: 40px;">(C) 1992-2005 John Conover. <a href="http://www.johncon.com/john/SSheadphoneAmp/index.html" target="_top">http://www.johncon.com/john/SSheadphoneAmp/index.html</a><br>
+      </div>
+      <br>
+
+      <a name="r11"></a>[11]&nbsp; MultimediaWiki: PCM.<br>
+
+      
+      <div style="margin-left: 40px;"><a href="http://wiki.multimedia.cx/index.php?title=PCM" target="_top">http://wiki.multimedia.cx/index.php?title=PCM</a><br>
+      </div>
+
+      <br>
+
+
+      <a name="r12"></a>[12]&nbsp; Digital filter. From Wikipedia, the free encyclopedia.<br>
+      <div style="margin-left: 40px;"><a href="http://en.wikipedia.org/wiki/Digital_filter" target="_top">http://en.wikipedia.org/wiki/Digital_filter</a><br>
+      </div>
+      <br>
+
+
+      
+      <hr style="width: 100%; height: 2px;">Copyright (c) 2005-2010&nbsp;
+Boris Mikhaylov &lt; <a href="http://www.tmn.ru/%7Ebor" target="_top">http://www.tmn.ru/~bor</a>&gt;</td>
+    </tr>
+  </tbody>
+</table>
+
+</body></html>
