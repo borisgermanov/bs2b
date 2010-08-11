@@ -127,7 +127,7 @@ responses of the bs2b by using an H-transform <a href="bs2b.html#r5">[5]</a>.<br
       <table style="width: 100%; background-color: rgb(255, 255, 204); text-align: left; font-family: courier new,courier,monospace;" border="0" cellpadding="2" cellspacing="2">
         <tbody>
           <tr>
-            <td style="vertical-align: top;"><font size="-1">#!/usr/bin/perl<br>
+            <td style="vertical-align: top;"><font size="-2">#!/usr/bin/perl<br>
             use Math::Complex;<br>
             $s&nbsp;&nbsp;&nbsp; = 40000; # Sample rate ( Hz )<br>
             $Fc&nbsp;&nbsp; = shift; # Lowpass filter cut frequency ( Hz )<br>
@@ -136,7 +136,7 @@ $Ad_h = shift; # Highboost filter gain ( dB ) ( 0dB is highs )<br>
             # example:<br>
 # perl bs2b-H-transform.pl 700 -6.75&nbsp;&nbsp; -2.25&nbsp; # Default preset&nbsp;&nbsp;&nbsp;&nbsp; ( 700Hz, 4.5dB )<br>
 # perl bs2b-H-transform.pl 700 -8.00&nbsp;&nbsp; -2.00&nbsp; # Chu Moy's preset&nbsp;&nbsp; ( 700Hz, 6.0dB )<br>
-# perl bs2b-H-transform.pl 650 -10.917 -1.417 # Jan Meier's preset ( 650Hz, 9.5dB )</font><font size="-1"><br>
+# perl bs2b-H-transform.pl 650 -10.917 -1.417 # Jan Meier's preset ( 650Hz, 9.5dB )<br>
             $G&nbsp;&nbsp;&nbsp; = 10 ** ( $Gd / 20 ); $A_h&nbsp; = 10 ** ( $Ad_h / 20 ); $G_h&nbsp; = 1 - $A_h;<br>
             $Gd_h = 20 * log( $G_h ) / log( 10 );<br>
 $Fc_h = $Fc * ( 2 ** ( ( $Gd - $Gd_h ) / 12 ) ); # '/3' by my theory, but...<br>
